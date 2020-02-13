@@ -404,6 +404,12 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 624347663}
+    - target: {fileID: 7956007736381887583, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 3142856607104787267, guid: a05a72143206b684ea2217b77e7ef0a1,
+        type: 3}
     - target: {fileID: 8863047245186003522, guid: ca1029c06da72ba489a4a54dc0a14cc2,
         type: 3}
       propertyPath: m_Name
@@ -620,6 +626,11 @@ PrefabInstance:
     - target: {fileID: 3499715727327058722, guid: d14adbf1018483d49a7f62b281fe3acd,
         type: 3}
       propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499715727327058722, guid: d14adbf1018483d49a7f62b281fe3acd,
+        type: 3}
+      propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 3499715727327058727, guid: d14adbf1018483d49a7f62b281fe3acd,

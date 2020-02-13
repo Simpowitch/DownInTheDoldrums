@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1002676454}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,6 +138,8 @@ MonoBehaviour:
   attackDistance: 0.75
   detectionRange: 10
   attackCooldown: 3
+  damagePerAttack: 1
+  hp: 10
 --- !u!114 &1002676454
 MonoBehaviour:
   m_ObjectHideFlags: 0
