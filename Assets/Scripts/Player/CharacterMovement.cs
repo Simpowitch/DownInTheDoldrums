@@ -8,19 +8,20 @@ public class CharacterMovement : MonoBehaviour
 
     public Sprite attackSprite;
 
-    public CharacterData myStats;
+    CharacterData myStats;
 
     Vector2 noramlizedMovement;
     float xMovement;
     float yMovement;
 
-    public Rigidbody2D myRigidbody;
+    Rigidbody2D myRigidbody;
 
 
 
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        myStats = GetComponent<CharacterData>();
     }
 
     // Update is called once per frame
