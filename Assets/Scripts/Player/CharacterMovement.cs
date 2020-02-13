@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    Direction facing;
+    public Direction facing;
 
     public Sprite attackSprite;
 
@@ -50,11 +50,6 @@ public class CharacterMovement : MonoBehaviour
         //noramlizedMovement *= Mathf.Abs(normalizedLength);
 
         facing = Movement();
-        print(facing);
-        if (Input.GetAxis("Fire1") != 0)
-        {
-            Attack();
-        }
     }
 
 
@@ -77,24 +72,5 @@ public class CharacterMovement : MonoBehaviour
             return Direction.Up;
         }
         return facing;
-    }
-
-
-    public void Attack()
-    {
-        switch (facing)
-        {
-            case Direction.Left:
-                
-                break;
-            case Direction.Right:
-                break;
-            case Direction.Up:
-                break;
-            case Direction.Down:
-                break;
-            default:
-                break;
-        }
     }
 }

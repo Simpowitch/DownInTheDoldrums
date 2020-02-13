@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterData : MonoBehaviour
 {
     public int health;
-    public float healthRegen;
+    public int healthRegen;
     public int stamina;
     public int armor;
     public int damage;
@@ -20,4 +20,5 @@ public class CharacterData : MonoBehaviour
             print("dead");
         }
     }
+
 }
