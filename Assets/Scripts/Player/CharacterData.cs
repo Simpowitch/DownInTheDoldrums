@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "CharacterData", menuName = "Character/New Character Data", order = 1)]
-public class CharacterData : ScriptableObject
+public class CharacterData : MonoBehaviour
 {
     public int health;
     public float healthRegen;
@@ -12,4 +11,13 @@ public class CharacterData : ScriptableObject
     public int armor;
     public int damage;
     public float movementSpeed;
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            print("dead");
+        }
+    }
 }

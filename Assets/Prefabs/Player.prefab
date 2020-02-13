@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8863047245186003551}
   - component: {fileID: 8863047245186003520}
+  - component: {fileID: 674890231046991831}
   - component: {fileID: 8863047245186003521}
   m_Layer: 0
   m_Name: Player
@@ -82,6 +83,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &674890231046991831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863047245186003522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e10e2b999480e64d8cf97bb7a8fa5ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  healthRegen: 1
+  stamina: 10
+  armor: 10
+  damage: 1
+  movementSpeed: 5
 --- !u!114 &8863047245186003521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,3 +115,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackSprite: {fileID: 21300000, guid: 8788fdf3a2c9f4a4bb1af13d631eff5a, type: 3}
   myStats: {fileID: 11400000, guid: 7e8710f8bec048f408215d6fcb3c827a, type: 2}
+  myRigidbody: {fileID: 0}

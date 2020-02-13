@@ -9,30 +9,47 @@ public class CharacterMovement : MonoBehaviour
     public Sprite attackSprite;
 
     public CharacterData myStats;
+
+    Vector2 noramlizedMovement;
     float xMovement;
     float yMovement;
+
+    public Rigidbody2D myRigidbody;
 
 
 
     void Start()
     {
-        
+        myRigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         InputCheck();
+    }
 
-        transform.position += new Vector3(xMovement, yMovement, 0) * Time.deltaTime * myStats.movementSpeed;
+    private void FixedUpdate()
+    {
+        myRigidbody.MovePosition(myRigidbody.position + noramlizedMovement * myStats.movementSpeed * Time.fixedDeltaTime);
     }
     void InputCheck()
     {
         xMovement = Input.GetAxis("Horizontal");
         yMovement = Input.GetAxis("Vertical");
 
-        facing = Movement();
+        noramlizedMovement = new Vector2(xMovement, yMovement);
 
+        if (noramlizedMovement.magnitude > 1)
+        {
+            noramlizedMovement /= noramlizedMovement.magnitude;
+        }
+
+        //float normalizedLength = (xMovement + yMovement) / 2;
+        //noramlizedMovement *= Mathf.Abs(normalizedLength);
+
+        facing = Movement();
+        print(facing);
         if (Input.GetAxis("Fire1") != 0)
         {
             Attack();
@@ -64,6 +81,19 @@ public class CharacterMovement : MonoBehaviour
 
     public void Attack()
     {
-        
+        switch (facing)
+        {
+            case Direction.Left:
+                
+                break;
+            case Direction.Right:
+                break;
+            case Direction.Up:
+                break;
+            case Direction.Down:
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: TestCharacter
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
-  health: 0
-  healthRegen: 0
-  stamina: 0
-  armor: 0
-  damage: 0
-  movementSpeed: 0
+  health: 10
+  healthRegen: 1
+  stamina: 5
+  armor: 10
+  damage: 1
+  movementSpeed: 5
