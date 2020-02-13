@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Direction { Left, Right, Up, Down }
+
 public class SpriteAnimation : MonoBehaviour
 {
-    public enum Direction { Left, Right, Up, Down }
-
-
     [SerializeField] SpriteRenderer charVisual = null;
 
     //Open for input through inspector, can also be set through methods below
