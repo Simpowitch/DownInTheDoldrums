@@ -1,30 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(SpriteAnimation))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyAI : MonoBehaviour
 {
     private enum State { Idle, Move, Attack}
     State currentState = State.Idle;
 
-    Transform player = null;
+    GameObject playerObject = null;
+    SpriteAnimation characterVisualUpdater;
+    Rigidbody2D rb;
 
-    [SerializeField] float movementSpeed = 0.5f;
+    [SerializeField] float movementSpeed = 1;
     [SerializeField] float attackDistance = 0.75f;
     [SerializeField] float detectionRange = 10f;
 
-     [SerializeField] float attackCooldown = 3;
-     float attackCooldownTimer = 0;
+    [SerializeField] float attackCooldown = 3;
+    float attackCooldownTimer = 0;
+
+    [SerializeField] int damagePerAttack = 1;
+    [SerializeField] int hp = 10;
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        characterVisualUpdater = GetComponent<SpriteAnimation>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player == null)
+        if (playerObject == null)
         {
             return;
         }
@@ -43,12 +50,14 @@ public class EnemyAI : MonoBehaviour
                 {
                     return State.Move;
                 }
+                characterVisualUpdater.SetIsWalking(false);
                 break;
             case State.Move:
                 if (CheckIfInAttackRange())
                 {
                     return State.Attack;
                 }
+                characterVisualUpdater.SetIsWalking(true);
                 MoveToPlayer();
                 break;
             case State.Attack:
@@ -64,24 +73,56 @@ public class EnemyAI : MonoBehaviour
 
     private bool LookForPlayer()
     {
-        return (Vector2.Distance(this.transform.position, player.transform.position) < detectionRange);
+        return (Vector2.Distance(this.transform.position, playerObject.transform.position) < detectionRange);
     }
 
     private void MoveToPlayer()
     {
         //Find target
-        Vector3 target = player.transform.position;
+        Vector3 target = playerObject.transform.position;
 
         //Find direction
-        Vector3 moveDir = (target - transform.position).normalized;
+        Vector2 moveDir = (target - transform.position).normalized;
 
         //Move
-        this.transform.position += (moveDir * movementSpeed * Time.deltaTime);
+        rb.MovePosition(new Vector2(this.transform.position.x, this.transform.position.y) + (moveDir * movementSpeed * Time.deltaTime));
+
+
+        //Update sprite direction
+        float deltaX = moveDir.x;
+        float deltaY = moveDir.y;
+
+        if (deltaX * deltaX > deltaY * deltaY)
+        {
+            if (deltaX >= 0.01f)
+            {
+                characterVisualUpdater.SetDirection(Direction.Right);
+                characterVisualUpdater.SetIsWalking(true);
+            }
+            if (deltaX <= -0.01f)
+            {
+                characterVisualUpdater.SetDirection(Direction.Left);
+                characterVisualUpdater.SetIsWalking(true);
+            }
+        }
+        else
+        {
+            if (deltaY >= 0.01f)
+            {
+                characterVisualUpdater.SetDirection(Direction.Up);
+                characterVisualUpdater.SetIsWalking(true);
+            }
+            if (deltaY <= -0.01f)
+            {
+                characterVisualUpdater.SetDirection(Direction.Down);
+                characterVisualUpdater.SetIsWalking(true);
+            }
+        }
     }
 
     private bool CheckIfInAttackRange()
     {
-        return (Vector2.Distance(this.transform.position, player.transform.position) < attackDistance);
+        return (Vector2.Distance(this.transform.position, playerObject.transform.position) < attackDistance);
     }
 
     private void Attack()
@@ -90,6 +131,7 @@ public class EnemyAI : MonoBehaviour
         {
             //Attack player
             Debug.Log("Player attacked");
+            playerObject.GetComponent<CharacterData>().TakeDamage(damagePerAttack);
             attackCooldownTimer = attackCooldown;
         }
     }
@@ -100,5 +142,20 @@ public class EnemyAI : MonoBehaviour
         {
             attackCooldownTimer -= Time.deltaTime;
         }
+    }
+
+    public void TakeDamage(int damageIn)
+    {
+        hp -= damageIn;
+
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        GameObject.Destroy(this.gameObject);
     }
 }

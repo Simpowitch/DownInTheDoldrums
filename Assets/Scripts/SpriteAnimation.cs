@@ -6,7 +6,7 @@ public enum Direction { Left, Right, Up, Down }
 
 public class SpriteAnimation : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer charVisual = null;
+    SpriteRenderer spriteRenderer = null;
 
     //Open for input through inspector, can also be set through methods below
     [SerializeField] Sprite[] left = null;
@@ -25,11 +25,13 @@ public class SpriteAnimation : MonoBehaviour
 
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         updateFrequency = 1f / framesPerSecond;
     }
 
     private void Update()
     {
+
         if (isWalking)
         {
             updateTimer += Time.deltaTime;
@@ -46,28 +48,28 @@ public class SpriteAnimation : MonoBehaviour
                         {
                             spriteIndex = 0;
                         }
-                        charVisual.sprite = left[spriteIndex];
+                        spriteRenderer.sprite = left[spriteIndex];
                         break;
                     case Direction.Right:
                         if (spriteIndex >= left.Length)
                         {
                             spriteIndex = 0;
                         }
-                        charVisual.sprite = left[spriteIndex];
+                        spriteRenderer.sprite = left[spriteIndex];
                         break;
                     case Direction.Up:
                         if (spriteIndex >= up.Length)
                         {
                             spriteIndex = 0;
                         }
-                        charVisual.sprite = up[spriteIndex];
+                        spriteRenderer.sprite = up[spriteIndex];
                         break;
                     case Direction.Down:
                         if (spriteIndex >= down.Length)
                         {
                             spriteIndex = 0;
                         }
-                        charVisual.sprite = down[spriteIndex];
+                        spriteRenderer.sprite = down[spriteIndex];
                         break;
                 }
             }
@@ -87,19 +89,19 @@ public class SpriteAnimation : MonoBehaviour
             {
                 case Direction.Left:
                     transform.localScale = new Vector3(1f, 1f, 1f);
-                    charVisual.sprite = left[0];
+                    spriteRenderer.sprite = left[0];
                     break;
                 case Direction.Right:
                     transform.localScale = new Vector3(-1f, 1f, 1f);
-                    charVisual.sprite = left[0];
+                    spriteRenderer.sprite = left[0];
                     break;
                 case Direction.Up:
                     transform.localScale = new Vector3(1f, 1f, 1f);
-                    charVisual.sprite = up[0];
+                    spriteRenderer.sprite = up[0];
                     break;
                 case Direction.Down:
                     transform.localScale = new Vector3(1f, 1f, 1f);
-                    charVisual.sprite = down[0];
+                    spriteRenderer.sprite = down[0];
                     break;
             }
         }
@@ -117,16 +119,16 @@ public class SpriteAnimation : MonoBehaviour
                 switch (myDirection)
                 {
                     case Direction.Left:
-                        charVisual.sprite = left[0];
+                        spriteRenderer.sprite = left[0];
                         break;
                     case Direction.Right:
-                        charVisual.sprite = left[0];
+                        spriteRenderer.sprite = left[0];
                         break;
                     case Direction.Up:
-                        charVisual.sprite = up[0];
+                        spriteRenderer.sprite = up[0];
                         break;
                     case Direction.Down:
-                        charVisual.sprite = down[0];
+                        spriteRenderer.sprite = down[0];
                         break;
                 }
             }
