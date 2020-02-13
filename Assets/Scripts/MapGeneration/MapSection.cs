@@ -1,22 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
 public class MapSection : MonoBehaviour
 {
-    public static int sectionXSize = 10;
-    public static int sectionYSize = 10;
-
     public Transform sectionExitParent = null;
     public List<SectionConnector> connectors;
 
 
-    private void Awake()
+    public void ValidateMapSection()
     {
         SetSectionExits();
     }
 
-    public void SetSectionExits()
+    private void SetSectionExits()
     {
         SectionConnector[] sectionExitTransforms = sectionExitParent.GetComponentsInChildren<SectionConnector>();
         connectors = new List<SectionConnector>();

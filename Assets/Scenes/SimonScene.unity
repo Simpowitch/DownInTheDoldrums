@@ -492,7 +492,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ee5d7dfb62811419001298874744c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSectionBlueprints:
+  sectionSize: 20
+  mapSectionsVectorLimit: 11
+  startMapSection: {x: 0, y: 0}
+  startSections:
+  - {fileID: 4652059398140226809, guid: b5a016a808dd47741ad109eca144b591, type: 3}
+  normalSections:
+  - {fileID: 4652059398140226809, guid: b5a016a808dd47741ad109eca144b591, type: 3}
+  endSections:
   - {fileID: 4652059398140226809, guid: b5a016a808dd47741ad109eca144b591, type: 3}
 --- !u!1001 &2048223660
 PrefabInstance:
