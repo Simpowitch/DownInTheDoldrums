@@ -6,6 +6,8 @@ public class LevelGeneration : MonoBehaviour
 {
     public GameObject[] mapSectionBlueprints = null;
 
+    public static List<Vector2> usedPositions = new List<Vector2>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,33 +16,57 @@ public class LevelGeneration : MonoBehaviour
 
     public void GenerateLevel(int criticalPathLength)
     {
-        Vector3 spawnPos = Vector3.zero;
+        Vector2 spawnPos = Vector2.zero;
 
         for (int i = 0; i < criticalPathLength; i++)
         {
+
             //Start
             GameObject newSectionObject = Instantiate(mapSectionBlueprints[Random.Range(0, mapSectionBlueprints.Length)]);
             newSectionObject.transform.position = spawnPos;
-
-
             MapSection newSection = newSectionObject.GetComponent<MapSection>();
 
-            Direction newDirection = newSection.exitDirections[Random.Range(0, newSection.exitDirections.Count)];
+            usedPositions.Add(spawnPos);
 
-            switch (newDirection)
+            Vector2 oldPosition = spawnPos;
+            Vector2 newPosition = oldPosition;
+
+            List<Direction> possibleDirections = new List<Direction>();
+
+            foreach (var item in newSection.connectors)
             {
-                case Direction.Left:
-                    spawnPos += new Vector3(-newSection.sectionXSize, 0);
-                    break;
-                case Direction.Right:
-                    spawnPos += new Vector3(newSection.sectionXSize, 0);
-                    break;
-                case Direction.Up:
-                    spawnPos += new Vector3(0, newSection.sectionYSize);
-                    break;
-                case Direction.Down:
-                    spawnPos += new Vector3(0, -newSection.sectionYSize);
-                    break;
+                possibleDirections.Add(item.exitDirection);
+            }
+
+            while (usedPositions.Contains(newPosition) && possibleDirections.Count > 0)
+            {
+                Direction newDirection = possibleDirections[Random.Range(0, possibleDirections.Count)];
+                possibleDirections.Remove(newDirection);
+
+                switch (newDirection)
+                {
+                    case Direction.Left:
+                        newPosition = oldPosition + new Vector2(-MapSection.sectionXSize, 0);
+                        break;
+                    case Direction.Right:
+                        newPosition = oldPosition + new Vector2(MapSection.sectionXSize, 0);
+                        break;
+                    case Direction.Up:
+                        newPosition = oldPosition + new Vector2(0, MapSection.sectionYSize);
+                        break;
+                    case Direction.Down:
+                        newPosition = oldPosition + new Vector2(0, -MapSection.sectionYSize);
+                        break;
+                }
+            }
+
+            if (!usedPositions.Contains(newPosition))
+            {
+                spawnPos = newPosition;
+            }
+            else
+            {
+                Debug.LogError("No possible exit found in level generator. Will cause fault in spawn");
             }
         }
     }
