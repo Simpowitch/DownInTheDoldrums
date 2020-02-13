@@ -5,7 +5,7 @@ using UnityEngine;
 public class BasicAttack : MonoBehaviour
 {
     public int damage = 5;
-    public float duration = 0.5f;
+    public float duration = 0.1f;
 
     // Start is called before the first frame update
     void Start()

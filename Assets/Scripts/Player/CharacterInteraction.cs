@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterInteraction : MonoBehaviour
 {
-    const float CREATERANGE = 0.5f, COOLDOWNTIME = 0.7f;
+    const float COOLDOWNTIME = 0.4f;
     float cooldown;
 
     public GameObject weapon;
@@ -25,16 +25,16 @@ public class CharacterInteraction : MonoBehaviour
                 switch (myMovement.facing)
                 {
                     case Direction.Left:
-                        Instantiate(weapon, transform.position + Vector3.left * CREATERANGE, Quaternion.Euler(0, 0, 180));
+                        Instantiate(weapon, transform.position + Vector3.left * 0.5f, Quaternion.Euler(0, 0, 180));
                         break;
                     case Direction.Right:
-                        Instantiate(weapon, transform.position + Vector3.right * CREATERANGE, Quaternion.Euler(0, 0, 0));
+                        Instantiate(weapon, transform.position + Vector3.right * 0.5f, Quaternion.Euler(0, 0, 0));
                         break;
                     case Direction.Up:
-                        Instantiate(weapon, transform.position + Vector3.up * CREATERANGE, Quaternion.Euler(0, 0, 270));
+                        Instantiate(weapon, transform.position + Vector3.up * 0.8f, Quaternion.Euler(0, 0, 90));
                         break;
                     case Direction.Down:
-                        Instantiate(weapon, transform.position + Vector3.down * CREATERANGE, Quaternion.Euler(0, 0, 90));
+                        Instantiate(weapon, transform.position + Vector3.down * 0.8f, Quaternion.Euler(0, 0, 270));
                         break;
                     default:
                         break;
