@@ -32,11 +32,11 @@ public class EnemyAI : MonoBehaviour
         currentState = FSM(currentState);
     }
 
-    private State FSM(State state)
+    private State FSM(State inputState)
     {
         CooldownTimers();
 
-        switch (state)
+        switch (inputState)
         {
             case State.Idle:
                 if (LookForPlayer())
@@ -52,14 +52,14 @@ public class EnemyAI : MonoBehaviour
                 MoveToPlayer();
                 break;
             case State.Attack:
-                Attack();
                 if (!CheckIfInAttackRange())
                 {
                     return State.Move;
                 }
+                Attack();
                 break;
         }
-        return State.Idle;
+        return inputState;
     }
 
     private bool LookForPlayer()
