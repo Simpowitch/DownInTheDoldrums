@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class MapSection : MonoBehaviour
 {
-    public Transform sectionExitParent = null;
-    public List<SectionConnector> connectors;
+    public Transform sectionSpawnersParent = null;
+    public List<SectionSpawner> sectionSpawners;
 
 
     public void ValidateMapSection()
     {
-        SetSectionExits();
+        SetSpawners();
     }
 
-    private void SetSectionExits()
+    private void SetSpawners()
     {
-        SectionConnector[] sectionExitTransforms = sectionExitParent.GetComponentsInChildren<SectionConnector>();
-        connectors = new List<SectionConnector>();
+        SectionSpawner[] sectionExitTransforms = sectionSpawnersParent.GetComponentsInChildren<SectionSpawner>();
+        sectionSpawners = new List<SectionSpawner>();
         foreach (var item in sectionExitTransforms)
         {
-            connectors.Add(item);
+            sectionSpawners.Add(item);
         }
     }
 }
