@@ -494,7 +494,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sectionSize: 20
   mapSectionsVectorLimit: 11
-  startMapSection: {fileID: 0}
+  startSections:
+  - {fileID: 4652059398140226809, guid: b5a016a808dd47741ad109eca144b591, type: 3}
+  normalSections:
+  - {fileID: 4652059398140226809, guid: b5a016a808dd47741ad109eca144b591, type: 3}
+  endSections:
+  - {fileID: 4652059398140226809, guid: b5a016a808dd47741ad109eca144b591, type: 3}
+  criticalPathMinLength: 4
+  criticalPathMaxLength: 8
 --- !u!1001 &2048223660
 PrefabInstance:
   m_ObjectHideFlags: 0
