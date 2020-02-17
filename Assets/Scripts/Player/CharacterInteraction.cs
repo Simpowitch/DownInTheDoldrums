@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CharacterInteraction : MonoBehaviour
 {
+
+    float xDirection;
+    float yDirection;
+
+
     const float COOLDOWNTIME = 0.4f;
     float cooldown;
 
@@ -17,34 +22,39 @@ public class CharacterInteraction : MonoBehaviour
     }
     void Update()
     {
-        print(cooldown);
-        if (cooldown <= 0)
+        xDirection = Input.GetAxis("HorizontalSecondary");
+        yDirection = Input.GetAxis("VerticalSecondary");
+
+        if (xDirection != 0 || yDirection != 0)
         {
-            if (Input.GetAxis("Fire1") != 0)
-            {
-                switch (myMovement.facing)
-                {
-                    case Direction.Left:
-                        Instantiate(weapon, transform.position + Vector3.left * 0.5f, Quaternion.Euler(0, 0, 180));
-                        break;
-                    case Direction.Right:
-                        Instantiate(weapon, transform.position + Vector3.right * 0.5f, Quaternion.Euler(0, 0, 0));
-                        break;
-                    case Direction.Up:
-                        Instantiate(weapon, transform.position + Vector3.up * 0.8f, Quaternion.Euler(0, 0, 90));
-                        break;
-                    case Direction.Down:
-                        Instantiate(weapon, transform.position + Vector3.down * 0.8f, Quaternion.Euler(0, 0, 270));
-                        break;
-                    default:
-                        break;
-                }
-                cooldown = COOLDOWNTIME;
-            }
+            BasicAttack(new AttackDirection(GetAttackDirection()), weapon);
         }
-        else
+    }
+
+    Direction GetAttackDirection()
+    {
+        if (xDirection < 0)
         {
-            cooldown -= Time.deltaTime;
+            return Direction.Left;
         }
+        if (xDirection > 0)
+        {
+            return Direction.Right;
+        }
+        if (yDirection < 0)
+        {
+            return Direction.Down;
+        }
+        if (yDirection > 0)
+        {
+            return Direction.Up;
+        }
+        return Direction.Down;
+    }
+
+    void BasicAttack(AttackDirection attackDirection, GameObject ability)
+    {   
+        Instantiate(ability, transform.position + attackDirection.direction, attackDirection.rotation);
+        cooldown = COOLDOWNTIME;
     }
 }
