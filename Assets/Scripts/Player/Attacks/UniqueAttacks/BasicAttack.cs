@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAttack : MonoBehaviour
+public class BasicAttack : AttackBase
 {
-    public int damage = 5;
-    public float duration = 0.1f;
-
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.Destroy(this.gameObject, duration);
+        GameObject.Destroy(this.gameObject, base.duration);
     }
     void Update()
     {
@@ -22,7 +19,7 @@ public class BasicAttack : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<EnemyAI>().TakeDamage(damage);
+            other.GetComponent<EnemyAI>().TakeDamage(base.damage);
             GetComponent<Collider>().enabled = false;
         }
     }

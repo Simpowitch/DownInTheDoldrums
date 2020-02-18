@@ -49,28 +49,6 @@ public class CharacterMovement : MonoBehaviour
         //float normalizedLength = (xMovement + yMovement) / 2;
         //noramlizedMovement *= Mathf.Abs(normalizedLength);
 
-        facing = Movement();
-    }
-
-
-    Direction Movement()
-    {
-        if (xMovement < 0)
-        {
-            return Direction.Left;
-        }
-        if (xMovement > 0)
-        {
-            return Direction.Right;
-        }
-        if (yMovement < 0)
-        {
-            return Direction.Down;
-        }
-        if (yMovement > 0)
-        {
-            return Direction.Up;
-        }
-        return facing;
+        facing = Utility.GetAttackDirection(xMovement, yMovement);
     }
 }

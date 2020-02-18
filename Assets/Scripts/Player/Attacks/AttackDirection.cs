@@ -21,11 +21,11 @@ public class AttackDirection
                 rotation = Quaternion.Euler(0, 0, 0);
                 break;
             case Direction.Up:
-                direction = Vector3.up * 0.8f;
+                direction = Vector3.up * 0.5f;
                 rotation = Quaternion.Euler(0, 0, 90);
                 break;
             case Direction.Down:
-                direction = Vector3.down * 0.8f;
+                direction = Vector3.down * 0.5f;
                 rotation = Quaternion.Euler(0, 0, 270);
                 break;
             default:
