@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAttack : AttackBase
+public class BasicAttack : AbilityBase
 {
     // Start is called before the first frame update
     void Start()
     {
         GameObject.Destroy(this.gameObject, base.duration);
-    }
-    void Update()
-    {
-            
     }
 
     // Update is called once per frame

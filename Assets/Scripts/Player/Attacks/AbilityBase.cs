@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackBase : MonoBehaviour
+public class AbilityBase : MonoBehaviour
 {
     public int damage;
     public float duration;

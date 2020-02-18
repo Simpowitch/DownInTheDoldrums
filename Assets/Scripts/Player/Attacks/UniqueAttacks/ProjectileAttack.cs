@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileAttack : AttackBase
+public class ProjectileAttack : AbilityBase
 {
     public float speed;
-
     Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,6 @@ public class ProjectileAttack : AttackBase
     {
         if (collision.tag == "Enemy")
         {
-            print("Hit");
             collision.GetComponent<EnemyAI>().TakeDamage(base.damage);
             Destroy(gameObject);
         }

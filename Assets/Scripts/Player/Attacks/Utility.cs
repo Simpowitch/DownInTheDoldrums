@@ -4,7 +4,10 @@ using UnityEngine;
 
 public static class Utility
 {
-    public static Direction GetAttackDirection(float xDirection, float yDirection)
+    ///<summary>
+    ///<para>Get Direction from -1 to 1 inputs </para>
+    ///</summary>
+    public static Direction GetDirection(float xDirection, float yDirection)
     {
         if (xDirection < 0)
         {
