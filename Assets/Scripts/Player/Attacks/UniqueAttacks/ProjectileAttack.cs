@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileAttack : AttackBase
 {
-    const float SPEED = 25;
+    public float speed;
 
     Rigidbody2D rb;
     // Start is called before the first frame update
@@ -17,11 +17,17 @@ public class ProjectileAttack : AttackBase
     // Update is called once per frame
     void Update()
     {
-        rb.MovePosition(transform.position + transform.right * Time.deltaTime * SPEED);
+        rb.MovePosition(transform.position + transform.right * Time.deltaTime * speed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "Enemy")
+        {
+            print("Hit");
+            collision.GetComponent<EnemyAI>().TakeDamage(base.damage);
+            Destroy(gameObject);
+        }
         Destroy(gameObject);
     }
 }

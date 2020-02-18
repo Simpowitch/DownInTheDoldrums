@@ -96,10 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a606c9dd9f7ae84ba9391a1c87caecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 1
   duration: 1
-  cooldown: 0.1
+  cooldown: 0.3
   attachedToPlayer: 0
+  speed: 10
 --- !u!61 &4197976549652529064
 BoxCollider2D:
   m_ObjectHideFlags: 0
