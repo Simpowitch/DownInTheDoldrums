@@ -22,12 +22,12 @@ public class AbilityDirection
                 break;
 
             case Direction.Up:
-                direction = Vector3.up * 0.5f;
+                direction = Vector3.up * 0.52f;
                 rotation = Quaternion.Euler(0, 0, 90);
                 break;
 
             case Direction.Down:
-                direction = Vector3.down * 0.5f;
+                direction = Vector3.down * 0.53f;
                 rotation = Quaternion.Euler(0, 0, 270);
                 break;
 

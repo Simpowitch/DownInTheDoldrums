@@ -7,7 +7,7 @@ public class BasicAttack : AbilityBase
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.Destroy(this.gameObject, base.duration);
+        Destroy(this.gameObject, base.duration);
     }
 
     // Update is called once per frame
@@ -16,8 +16,6 @@ public class BasicAttack : AbilityBase
         if (collision.tag == "Enemy")
         {
             collision.GetComponent<EnemyAI>().TakeDamage(base.damage);
-            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

@@ -27,6 +27,9 @@ public class ProjectileAttack : AbilityBase
             collision.GetComponent<EnemyAI>().TakeDamage(base.damage);
             Destroy(gameObject);
         }
-        Destroy(gameObject);
+        else if (collision.tag != "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 }

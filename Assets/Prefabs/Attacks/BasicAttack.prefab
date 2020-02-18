@@ -124,7 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   duration: 0.1
-  cooldown: 0.1
+  cooldown: 0.3
   attachedToPlayer: 1
 --- !u!50 &4028819653316673079
 Rigidbody2D:
