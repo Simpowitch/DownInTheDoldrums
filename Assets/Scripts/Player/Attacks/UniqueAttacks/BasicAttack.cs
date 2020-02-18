@@ -15,12 +15,13 @@ public class BasicAttack : AttackBase
     }
 
     // Update is called once per frame
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.tag == "Enemy")
+        if (collision.tag == "Enemy")
         {
-            other.GetComponent<EnemyAI>().TakeDamage(base.damage);
-            GetComponent<Collider>().enabled = false;
+            collision.GetComponent<EnemyAI>().TakeDamage(base.damage);
+            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 }
