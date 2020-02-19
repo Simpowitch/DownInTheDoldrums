@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(SpriteAnimation))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -142,6 +143,13 @@ public class EnemyAI : MonoBehaviour
         {
             attackCooldownTimer -= Time.deltaTime;
         }
+    }
+
+    public IEnumerator SlowDown(float duration, float slowFactor)
+    {
+        movementSpeed *= (1 - slowFactor);
+        yield return new WaitForSeconds(duration);
+        movementSpeed /= (1 - slowFactor);
     }
 
     public void TakeDamage(int damageIn)
