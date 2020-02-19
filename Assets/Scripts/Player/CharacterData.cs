@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CharacterData : MonoBehaviour
 {
     [SerializeField] HealthBar healthBar = null;
@@ -14,6 +13,8 @@ public class CharacterData : MonoBehaviour
     public int armor;
     public int damage;
     public float movementSpeed;
+
+    public List<Item> items = new List<Item>();
 
     private void Start()
     {
@@ -34,5 +35,31 @@ public class CharacterData : MonoBehaviour
     {
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(health);
+    }
+
+    public void AddItem(Item newItem)
+    {
+        items.Add(newItem);
+        foreach (Effect newEffect in newItem.effects)
+        {
+            switch (newEffect.effectType)
+            {
+                case EffectType.Damage:
+                    damage += newEffect.change;
+                    break;
+                case EffectType.MovementSpeed:
+                    movementSpeed += newEffect.change;
+                    break;
+                case EffectType.MaxHP:
+                    maxHealth += newEffect.change;
+                    break;
+                case EffectType.InstantHeal:
+                    health += newEffect.change;
+                    break;
+            }
+        }
+
+        //Update UI to show changes
+        UpdateHealthBar();
     }
 }
