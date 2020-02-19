@@ -7,16 +7,13 @@ public class CharacterMovement : MonoBehaviour
     public Direction facing;
 
     public Sprite attackSprite;
+    Rigidbody2D myRigidbody;
 
     CharacterData myStats;
 
-    Vector2 noramlizedMovement;
     float xMovement;
     float yMovement;
-
-    Rigidbody2D myRigidbody;
-
-
+    Vector2 noramlizedMovement;
 
     void Start()
     {
@@ -24,7 +21,6 @@ public class CharacterMovement : MonoBehaviour
         myStats = GetComponent<CharacterData>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         InputCheck();
@@ -45,32 +41,6 @@ public class CharacterMovement : MonoBehaviour
         {
             noramlizedMovement /= noramlizedMovement.magnitude;
         }
-
-        //float normalizedLength = (xMovement + yMovement) / 2;
-        //noramlizedMovement *= Mathf.Abs(normalizedLength);
-
-        facing = Movement();
-    }
-
-
-    Direction Movement()
-    {
-        if (xMovement < 0)
-        {
-            return Direction.Left;
-        }
-        if (xMovement > 0)
-        {
-            return Direction.Right;
-        }
-        if (yMovement < 0)
-        {
-            return Direction.Down;
-        }
-        if (yMovement > 0)
-        {
-            return Direction.Up;
-        }
-        return facing;
+        facing = Utility.GetDirection(xMovement, yMovement);
     }
 }

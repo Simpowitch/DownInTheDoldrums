@@ -4,47 +4,45 @@ using UnityEngine;
 
 public class CharacterInteraction : MonoBehaviour
 {
-    const float COOLDOWNTIME = 0.4f;
+    public AbilityBase ability;
+
+    float xDirection;
+    float yDirection;
+
     float cooldown;
 
-    public GameObject weapon;
-    CharacterMovement myMovement;
-
-
-    void Start()
-    {
-        myMovement = GetComponent<CharacterMovement>(); 
-    }
     void Update()
     {
-        print(cooldown);
-        if (cooldown <= 0)
+        InputCheck();
+    }
+
+    void InputCheck()
+    {
+        xDirection = Input.GetAxis("HorizontalSecondary");
+        yDirection = Input.GetAxis("VerticalSecondary");
+
+        //Check attack input
+        if (xDirection != 0 || yDirection != 0)
         {
-            if (Input.GetAxis("Fire1") != 0)
+            if (cooldown <= 0)
             {
-                switch (myMovement.facing)
-                {
-                    case Direction.Left:
-                        Instantiate(weapon, transform.position + Vector3.left * 0.5f, Quaternion.Euler(0, 0, 180));
-                        break;
-                    case Direction.Right:
-                        Instantiate(weapon, transform.position + Vector3.right * 0.5f, Quaternion.Euler(0, 0, 0));
-                        break;
-                    case Direction.Up:
-                        Instantiate(weapon, transform.position + Vector3.up * 0.8f, Quaternion.Euler(0, 0, 90));
-                        break;
-                    case Direction.Down:
-                        Instantiate(weapon, transform.position + Vector3.down * 0.8f, Quaternion.Euler(0, 0, 270));
-                        break;
-                    default:
-                        break;
-                }
-                cooldown = COOLDOWNTIME;
+                Attack(new AbilityDirection(Utility.GetDirection(xDirection, yDirection)), ability);
+                cooldown = ability.cooldown;
+            }
+            else if (cooldown > 0)
+            {
+                cooldown -= Time.deltaTime;
             }
         }
-        else
+    }
+
+    //Instantiate current ability with it's configuration
+     public void Attack(AbilityDirection attackDirection, AbilityBase ability)
+    {
+        GameObject newAbility = Instantiate(ability.gameObject, transform.position + attackDirection.direction, attackDirection.rotation);
+        if (ability.attachedToPlayer)
         {
-            cooldown -= Time.deltaTime;
+            newAbility.transform.SetParent(transform);
         }
     }
 }
