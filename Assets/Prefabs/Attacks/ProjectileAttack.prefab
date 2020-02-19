@@ -100,7 +100,7 @@ MonoBehaviour:
   duration: 1
   cooldown: 0.3
   attachedToPlayer: 0
-  speed: 10
+  speed: 25
 --- !u!61 &4197976549652529064
 BoxCollider2D:
   m_ObjectHideFlags: 0
