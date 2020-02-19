@@ -1,44 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterWeaponSelect : MonoBehaviour
 {
     public enum EquipmentSlots {EquipOne, EquipTwo, EquipThree, EquipFour}
     public EquipmentSlots selectedSlot;
-
-    public Equipment basicAttack;
-
-    //Move slots to character data
-    public Equipment equipSlotOne;
-    public Equipment equipSlotTwo;
-    public Equipment equipSlotThree;
-    public Equipment equipSlotFour;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    
+    [SerializeField] Image selectIcon;
 
     public void InputCheck(float horizontal, float vertical)
     {
         if (horizontal > 0)
         {
             selectedSlot = EquipmentSlots.EquipTwo;
+            selectIcon.transform.localPosition = new Vector3(30,0);
         }
         if (horizontal < 0)
         {
             selectedSlot = EquipmentSlots.EquipFour;
+            selectIcon.transform.localPosition = new Vector3(-30, 0);
         }
         if (vertical > 0)
         {
             selectedSlot = EquipmentSlots.EquipOne;
+            selectIcon.transform.localPosition = new Vector3(0, 30);
         }
         if (vertical < 0)
         {
             selectedSlot = EquipmentSlots.EquipThree;
+            selectIcon.transform.localPosition = new Vector3(0, -30);
         }
     }
 }

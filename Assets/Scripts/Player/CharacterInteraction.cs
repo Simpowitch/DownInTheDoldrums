@@ -7,12 +7,10 @@ public class CharacterInteraction : MonoBehaviour
 
     float cooldown;
     CharacterData characterData;
-    CharacterWeaponSelect tempWeaponSelect;
 
     private void Start()
     {
         characterData = GetComponent<CharacterData>();
-        tempWeaponSelect = GetComponent<CharacterWeaponSelect>();
     }
 
     public void InputCheck(float xDirection, float yDirection, CharacterWeaponSelect.EquipmentSlots equipmentSlot)
@@ -38,47 +36,49 @@ public class CharacterInteraction : MonoBehaviour
         switch (equipmentSlot)
         {
             case CharacterWeaponSelect.EquipmentSlots.EquipOne:
-                if (tempWeaponSelect.equipSlotOne == null)
+                if (characterData.equipSlotOne == null)
                 {
-                    return tempWeaponSelect.basicAttack;
+                    return characterData.basicAttack;
                 }
                 else
                 {
-                    return tempWeaponSelect.equipSlotOne;
-                }
-            case CharacterWeaponSelect.EquipmentSlots.EquipTwo:
-                if (tempWeaponSelect.equipSlotTwo == null)
-                {
-                    return tempWeaponSelect.basicAttack;
+                    return characterData.equipSlotOne;
                 }
 
+            case CharacterWeaponSelect.EquipmentSlots.EquipTwo:
+                if (characterData.equipSlotTwo == null)
+                {
+                    return characterData.basicAttack;
+                }
                 else
                 {
-                    return tempWeaponSelect.equipSlotTwo;
+                    return characterData.equipSlotTwo;
                 }
+
             case CharacterWeaponSelect.EquipmentSlots.EquipThree:
-                if (tempWeaponSelect.equipSlotThree == null)
+                if (characterData.equipSlotThree == null)
                 {
-                    return tempWeaponSelect.basicAttack;
+                    return characterData.basicAttack;
                 }
                 else
                 {
-                    return tempWeaponSelect.equipSlotThree;
+                    return characterData.equipSlotThree;
                 }
+
             case CharacterWeaponSelect.EquipmentSlots.EquipFour:
-                if (tempWeaponSelect.equipSlotFour == null)
+                if (characterData.equipSlotFour == null)
                 {
-                    return tempWeaponSelect.basicAttack;
+                    return characterData.basicAttack;
                 }
                 else
                 {
-                    return tempWeaponSelect.equipSlotFour;
+                    return characterData.equipSlotFour;
                 }
+
             default:
-                return tempWeaponSelect.basicAttack;
+                return characterData.basicAttack;
         }
     }
-
 
     //Instantiate current ability with it's configuration
      public void Attack(EquipmentDirection attackDirection, Equipment equipment)
