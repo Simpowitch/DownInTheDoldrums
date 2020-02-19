@@ -11,8 +11,6 @@ public class CharacterMovement : MonoBehaviour
 
     CharacterData myStats;
 
-    float xMovement;
-    float yMovement;
     Vector2 noramlizedMovement;
 
     void Start()
@@ -21,20 +19,12 @@ public class CharacterMovement : MonoBehaviour
         myStats = GetComponent<CharacterData>();
     }
 
-    void Update()
-    {
-        InputCheck();
-    }
-
     private void FixedUpdate()
     {
         myRigidbody.MovePosition(myRigidbody.position + noramlizedMovement * myStats.movementSpeed * Time.fixedDeltaTime);
     }
-    void InputCheck()
+    public void InputCheck(float xMovement, float yMovement)
     {
-        xMovement = Input.GetAxis("Horizontal");
-        yMovement = Input.GetAxis("Vertical");
-
         noramlizedMovement = new Vector2(xMovement, yMovement);
 
         if (noramlizedMovement.magnitude > 1)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileAttack : AbilityBase
+public class ProjectileAttack : Equipment
 {
     public float speed;
     Rigidbody2D rb;

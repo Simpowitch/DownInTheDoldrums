@@ -4,30 +4,19 @@ using UnityEngine;
 
 public class CharacterInteraction : MonoBehaviour
 {
-    public AbilityBase ability;
-
-    float xDirection;
-    float yDirection;
+    public Equipment equipment;
 
     float cooldown;
 
-    void Update()
+    public void InputCheck(float xDirection, float yDirection)
     {
-        InputCheck();
-    }
-
-    void InputCheck()
-    {
-        xDirection = Input.GetAxis("HorizontalSecondary");
-        yDirection = Input.GetAxis("VerticalSecondary");
-
         //Check attack input
         if (xDirection != 0 || yDirection != 0)
         {
             if (cooldown <= 0)
             {
-                Attack(new AbilityDirection(Utility.GetDirection(xDirection, yDirection)), ability);
-                cooldown = ability.cooldown;
+                Attack(new EquipmentDirection(Utility.GetDirection(xDirection, yDirection)), equipment);
+                cooldown = equipment.cooldown;
             }
             else if (cooldown > 0)
             {
@@ -37,10 +26,10 @@ public class CharacterInteraction : MonoBehaviour
     }
 
     //Instantiate current ability with it's configuration
-     public void Attack(AbilityDirection attackDirection, AbilityBase ability)
+     public void Attack(EquipmentDirection attackDirection, Equipment equipment)
     {
-        GameObject newAbility = Instantiate(ability.gameObject, transform.position + attackDirection.direction, attackDirection.rotation);
-        if (ability.attachedToPlayer)
+        GameObject newAbility = Instantiate(equipment.gameObject, transform.position + attackDirection.direction, attackDirection.rotation);
+        if (equipment.attachedToPlayer)
         {
             newAbility.transform.SetParent(transform);
         }

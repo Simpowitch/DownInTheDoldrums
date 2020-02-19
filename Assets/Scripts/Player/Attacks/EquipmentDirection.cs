@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityDirection
+public class EquipmentDirection
 {
     public Vector3 direction;
     public Quaternion rotation;
 
-    public AbilityDirection(Direction attackDirection)
+    public EquipmentDirection(Direction attackDirection)
     {
         switch (attackDirection)
         {

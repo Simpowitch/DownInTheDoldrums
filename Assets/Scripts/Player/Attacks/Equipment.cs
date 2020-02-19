@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityBase : MonoBehaviour
+public class Equipment : MonoBehaviour
 {
     public int damage;
     public float duration;
