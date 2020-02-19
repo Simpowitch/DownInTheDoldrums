@@ -22,9 +22,10 @@ public class CharacterInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        interaction.InputCheck(Input.GetAxis("HorizontalSecondary"), Input.GetAxis("VerticalSecondary"));
-        movement.InputCheck(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         weaponSelect.InputCheck(Input.GetAxis("WeaponHorizontal"), Input.GetAxis("WeaponVertical"));
+        interaction.InputCheck(Input.GetAxis("HorizontalSecondary"), Input.GetAxis("VerticalSecondary"), weaponSelect.selectedSlot);
+        movement.InputCheck(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
     }
 
 

@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class CharacterInteraction : MonoBehaviour
 {
-    public Equipment equipment;
 
     float cooldown;
+    CharacterData characterData;
 
-    public void InputCheck(float xDirection, float yDirection)
+    private void Start()
     {
+        characterData = GetComponent<CharacterData>();
+    }
+
+    public void InputCheck(float xDirection, float yDirection, CharacterWeaponSelect.EquipmentSlots equipmentSlot)
+    {
+
+        Equipment equipment = GetEquipment(equipmentSlot);
         //Check attack input
         if (xDirection != 0 || yDirection != 0)
         {
@@ -22,6 +29,54 @@ public class CharacterInteraction : MonoBehaviour
             {
                 cooldown -= Time.deltaTime;
             }
+        }
+    }
+    Equipment GetEquipment(CharacterWeaponSelect.EquipmentSlots equipmentSlot)
+    {
+        switch (equipmentSlot)
+        {
+            case CharacterWeaponSelect.EquipmentSlots.EquipOne:
+                if (characterData.equipSlotOne == null)
+                {
+                    return characterData.basicAttack;
+                }
+                else
+                {
+                    return characterData.equipSlotOne;
+                }
+
+            case CharacterWeaponSelect.EquipmentSlots.EquipTwo:
+                if (characterData.equipSlotTwo == null)
+                {
+                    return characterData.basicAttack;
+                }
+                else
+                {
+                    return characterData.equipSlotTwo;
+                }
+
+            case CharacterWeaponSelect.EquipmentSlots.EquipThree:
+                if (characterData.equipSlotThree == null)
+                {
+                    return characterData.basicAttack;
+                }
+                else
+                {
+                    return characterData.equipSlotThree;
+                }
+
+            case CharacterWeaponSelect.EquipmentSlots.EquipFour:
+                if (characterData.equipSlotFour == null)
+                {
+                    return characterData.basicAttack;
+                }
+                else
+                {
+                    return characterData.equipSlotFour;
+                }
+
+            default:
+                return characterData.basicAttack;
         }
     }
 
