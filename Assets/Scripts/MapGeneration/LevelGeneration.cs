@@ -10,23 +10,22 @@ public class LevelGeneration : MonoBehaviour
 
     public SectionSpawner[,] mapSectionSpawners;
 
-
-    [SerializeField] GameObject[] startSections = null;
-    [SerializeField] GameObject[] normalSections = null;
-    [SerializeField] GameObject[] endSections = null;
-
     List<SectionSpawner> criticalPathSpawners = new List<SectionSpawner>();
+    public int extraAreaSpawnChance = 0;
+
 
     public int criticalPathMinLength = 4;
     public int criticalPathMaxLength = 8;
+
+    GameObject[] sectionBlueprints;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        sectionBlueprints = Resources.LoadAll<GameObject>("MapSections");
         GenerateLevel(Random.Range(criticalPathMinLength, criticalPathMaxLength));
     }
-
 
     public void GenerateLevel(int criticalPathLength)
     {
@@ -43,7 +42,7 @@ public class LevelGeneration : MonoBehaviour
 
         //Start
         //Setup Critical path
-        Vector2Int startCoordinates = new Vector2Int(Random.Range(1, mapSectionsVectorLimit - 1), Random.Range(1, mapSectionsVectorLimit - 1));
+        Vector2Int startCoordinates = new Vector2Int(Mathf.RoundToInt(mapSectionsVectorLimit/2), Mathf.RoundToInt(mapSectionsVectorLimit/2));
         SetUpCriticalPath(startCoordinates, criticalPathLength, SectionSpawner.SectionType.StartSection);
 
         //Setup Extra Sections
@@ -56,142 +55,193 @@ public class LevelGeneration : MonoBehaviour
         }
 
         //Spawn Rooms
-        foreach (var item in mapSectionSpawners)
+        foreach (var mapSpawner in mapSectionSpawners)
         {
             GameObject spawnedObject = null;
-            switch (item.sectionType)
+            switch (mapSpawner.sectionType)
             {
                 case SectionSpawner.SectionType.Free:
                     break;
                 case SectionSpawner.SectionType.StartSection:
-                    spawnedObject = Instantiate(startSections[Random.Range(0, startSections.Length)]);
-                    spawnedObject.transform.position = item.spawnPos;
+                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections()));
+                    spawnedObject.transform.position = mapSpawner.spawnPos;
                     break;
                 case SectionSpawner.SectionType.NormalSection:
-                    spawnedObject = Instantiate(normalSections[Random.Range(0, normalSections.Length)]);
-                    spawnedObject.transform.position = item.spawnPos;
+                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections()));
+                    spawnedObject.transform.position = mapSpawner.spawnPos;
                     break;
                 case SectionSpawner.SectionType.EndSection:
-                    spawnedObject = Instantiate(endSections[Random.Range(0, endSections.Length)]);
-                    spawnedObject.transform.position = item.spawnPos;
+                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections()));
+                    spawnedObject.transform.position = mapSpawner.spawnPos;
                     break;
             }
             if (spawnedObject != null)
             {
-                spawnedObject.name = item.coordinates.ToString() + " " + spawnedObject.name;
+                spawnedObject.name = mapSpawner.coordinates.ToString() + " " + spawnedObject.name + " " + mapSpawner.sectionType.ToString();
             }
         }
     }
 
+    /// <summary>
+    /// Returns a map section which has all the required directions specified in the parameter
+    /// </summary>
+    private GameObject FindSectionWithMatchingOpenings(List<Direction> requiredDirections)
+    {
+        List<GameObject> fittingBlueprints = new List<GameObject>();
+        foreach (GameObject blueprint in sectionBlueprints)
+        {
+            List<Direction> blueprintOpenings = blueprint.GetComponent<MapSection>().openings;
+            bool matching = true;
+            foreach (Direction direction in requiredDirections)
+            {
+                if (!blueprintOpenings.Contains(direction))
+                {
+                    matching = false;
+                    break;
+                }
+                if (requiredDirections.Count != blueprintOpenings.Count)
+                {
+                    matching = false;
+                    break;
+                }
+            }
+
+            if (matching)
+            {
+                fittingBlueprints.Add(blueprint);
+            }
+        }
+
+        if (fittingBlueprints.Count > 0)
+        {
+            return fittingBlueprints[Random.Range(0, fittingBlueprints.Count)];
+        }
+        else
+        {
+            Debug.LogError("Map section not found with the required direction openings");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Adds opening to siderooms through recursive methods
+    /// </summary>
     private void SetUpSideSections(SectionSpawner startSpawner)
     {
-        int rng = Random.Range(0, 100);
-        int extraAreaSpawnChance = 75;
+        List<Direction> possibleDirections = GetAllowedSideRoomDirections(startSpawner);
 
-        if (rng < extraAreaSpawnChance)
+        for (int i = 0; i < possibleDirections.Count; i++)
         {
-            List<Direction> possibleDirections = GetUnblockedDirections(startSpawner.coordinates);
+            int rng = Random.Range(0, 100);
 
-            if (possibleDirections.Count > 0)
+            if (rng < extraAreaSpawnChance)
             {
                 Direction newDir = possibleDirections[Random.Range(0, possibleDirections.Count)];
-                startSpawner.openDirections.Add(newDir);
+                startSpawner.AddOpenDirection(newDir);
 
                 SectionSpawner newSpawner = GetSectionSpawner(startSpawner, newDir);
-                newSpawner.sectionType = SectionSpawner.SectionType.NormalSection;
-                newSpawner.openDirections.Add(GetOppositeDirection(newDir));
+                newSpawner.AddOpenDirection(GetOppositeDirection(newDir));
 
-                SetUpSideSections(newSpawner);
+                if (newSpawner.sectionType == SectionSpawner.SectionType.Free)
+                {
+                    newSpawner.sectionType = SectionSpawner.SectionType.NormalSection;
+                    SetUpSideSections(newSpawner);
+                }
             }
         }
     }
 
     private void SetUpCriticalPath(Vector2Int mapSectionIndex, int roomsToSpawn, SectionSpawner.SectionType sectionType)
     {
-        Direction inDirection = Direction.Left;
-        Direction outDirection = (Direction)Random.Range(0, 4);
-
-        Vector2Int testIndex = new Vector2Int(mapSectionIndex.x, mapSectionIndex.y);
-        switch (outDirection)
-        {
-            case Direction.Left:
-                testIndex += new Vector2Int(-1, 0);
-                inDirection = Direction.Right;
-                break;
-            case Direction.Right:
-                testIndex += new Vector2Int(1, 0);
-                inDirection = Direction.Left;
-                break;
-            case Direction.Up:
-                testIndex += new Vector2Int(0, 1);
-                inDirection = Direction.Down;
-                break;
-            case Direction.Down:
-                testIndex += new Vector2Int(0, -1);
-                inDirection = Direction.Up;
-                break;
-        }
-
-        if (CheckValidAndFreeSectionIndex(testIndex))
+        //If at the last section, end here
+        if (sectionType == SectionSpawner.SectionType.EndSection)
         {
             SectionSpawner sectionSpawner = mapSectionSpawners[mapSectionIndex.x, mapSectionIndex.y];
 
             //Set type of section
             sectionSpawner.sectionType = sectionType;
-
-            //Add out direction to this section
-            sectionSpawner.openDirections.Add(outDirection);
-
-            //Add to critical path spawner list
-            criticalPathSpawners.Add(sectionSpawner);
-
-            //Switch active index
-            mapSectionIndex = testIndex;
-
-            //Add in direction to the next section
-            mapSectionSpawners[mapSectionIndex.x, mapSectionIndex.y].openDirections.Add(inDirection);
-
-            roomsToSpawn--;
-
-            switch (sectionType)
-            {
-                case SectionSpawner.SectionType.Free:
-                    Debug.LogError("Not possible spawn");
-                    break;
-                case SectionSpawner.SectionType.StartSection:
-                    sectionType = SectionSpawner.SectionType.NormalSection;
-                    break;
-                case SectionSpawner.SectionType.NormalSection:
-                    if (roomsToSpawn == 1)
-                    {
-                        sectionType = SectionSpawner.SectionType.EndSection;
-                    }
-                    break;
-                case SectionSpawner.SectionType.EndSection:
-                    return;
-            }
-
-            SetUpCriticalPath(mapSectionIndex, roomsToSpawn, sectionType);
         }
         else
         {
-            //Re-Do
-            SetUpCriticalPath(mapSectionIndex, roomsToSpawn, sectionType);
+            //Test to add a new opening to next area
+            Direction inDirection = Direction.Left;
+            Direction outDirection = (Direction)Random.Range(0, 4);
+
+            Vector2Int testIndex = new Vector2Int(mapSectionIndex.x, mapSectionIndex.y);
+            switch (outDirection)
+            {
+                case Direction.Left:
+                    testIndex += new Vector2Int(-1, 0);
+                    inDirection = Direction.Right;
+                    break;
+                case Direction.Right:
+                    testIndex += new Vector2Int(1, 0);
+                    inDirection = Direction.Left;
+                    break;
+                case Direction.Up:
+                    testIndex += new Vector2Int(0, 1);
+                    inDirection = Direction.Down;
+                    break;
+                case Direction.Down:
+                    testIndex += new Vector2Int(0, -1);
+                    inDirection = Direction.Up;
+                    break;
+            }
+
+            if (CheckValidAndFreeSectionIndex(testIndex))
+            {
+                SectionSpawner sectionSpawner = mapSectionSpawners[mapSectionIndex.x, mapSectionIndex.y];
+
+                //Set type of section
+                sectionSpawner.sectionType = sectionType;
+
+                //Add out direction to this section
+                sectionSpawner.AddOpenDirection(outDirection);
+
+                //Add to critical path spawner list
+                criticalPathSpawners.Add(sectionSpawner);
+
+                //Switch active index
+                mapSectionIndex = testIndex;
+
+                //Add in direction to the next section
+                mapSectionSpawners[mapSectionIndex.x, mapSectionIndex.y].AddOpenDirection(inDirection);
+
+                roomsToSpawn--;
+
+                switch (sectionType)
+                {
+                    case SectionSpawner.SectionType.Free:
+                        Debug.LogError("Not possible spawn");
+                        break;
+                    case SectionSpawner.SectionType.StartSection:
+                        sectionType = SectionSpawner.SectionType.NormalSection;
+                        break;
+                    case SectionSpawner.SectionType.NormalSection:
+                        if (roomsToSpawn == 1)
+                        {
+                            sectionType = SectionSpawner.SectionType.EndSection;
+                        }
+                        break;
+                    case SectionSpawner.SectionType.EndSection:
+                        return;
+                }
+
+                //Recursion
+                SetUpCriticalPath(mapSectionIndex, roomsToSpawn, sectionType);
+            }
+            else
+            {
+                //Re-Do
+                SetUpCriticalPath(mapSectionIndex, roomsToSpawn, sectionType);
+            }
         }
     }
 
-    private bool CheckValidAndFreeSectionIndex(Vector2Int index)
-    {
-        return CheckValidAndFreeSectionIndex(index.x, index.y);
-    }
 
-    private bool CheckValidAndFreeSectionIndex(int x, int y)
+    private bool CheckIfWithinMapLimit(Vector2Int index)
     {
-        if (x < 0 || x >= mapSectionsVectorLimit || y < 0 || y >= mapSectionsVectorLimit)
-        {
-            return false;
-        }
-        else if (mapSectionSpawners[x, y].openDirections.Count > 0)
+        if (index.x < 0 || index.x >= mapSectionsVectorLimit || index.y < 0 || index.y >= mapSectionsVectorLimit)
         {
             return false;
         }
@@ -199,6 +249,11 @@ public class LevelGeneration : MonoBehaviour
         {
             return true;
         }
+    }
+
+    private bool CheckValidAndFreeSectionIndex(Vector2Int index)
+    {
+        return (CheckIfWithinMapLimit(index) && mapSectionSpawners[index.x, index.y].sectionType == SectionSpawner.SectionType.Free);
     }
 
     private List<Direction> GetUnblockedDirections(Vector2Int startSection)
@@ -221,8 +276,61 @@ public class LevelGeneration : MonoBehaviour
         {
             freeDirections.Add(Direction.Left);
         }
-
         return freeDirections;
+    }
+
+    /// <summary>
+    /// Adds all directions which can be used to create paths into other mapsections, but not into the end or start-area
+    /// </summary>
+    private List<Direction> GetAllowedSideRoomDirections(SectionSpawner startSection)
+    {
+        List<Direction> possibleDirections = new List<Direction>();
+
+        //UP
+        Direction testingDirection = Direction.Up;
+        SectionSpawner spawnerToTest = GetSectionSpawner(startSection, testingDirection);
+        if (spawnerToTest != null)
+        {
+            if (spawnerToTest.sectionType == SectionSpawner.SectionType.NormalSection || spawnerToTest.sectionType == SectionSpawner.SectionType.Free)
+            {
+                possibleDirections.Add(testingDirection);
+            }
+        }
+
+        //RIGHT
+        testingDirection = Direction.Right;
+        spawnerToTest = GetSectionSpawner(startSection, testingDirection);
+        if (spawnerToTest != null)
+        {
+            if (spawnerToTest.sectionType == SectionSpawner.SectionType.NormalSection || spawnerToTest.sectionType == SectionSpawner.SectionType.Free)
+            {
+                possibleDirections.Add(testingDirection);
+            }
+        }
+
+        //DOWN
+        testingDirection = Direction.Down;
+        spawnerToTest = GetSectionSpawner(startSection, testingDirection);
+        if (spawnerToTest != null)
+        {
+            if (spawnerToTest.sectionType == SectionSpawner.SectionType.NormalSection || spawnerToTest.sectionType == SectionSpawner.SectionType.Free)
+            {
+                possibleDirections.Add(testingDirection);
+            }
+        }
+
+        //LEFT
+        testingDirection = Direction.Left;
+        spawnerToTest = GetSectionSpawner(startSection, testingDirection);
+        if (spawnerToTest != null)
+        {
+            if (spawnerToTest.sectionType == SectionSpawner.SectionType.NormalSection || spawnerToTest.sectionType == SectionSpawner.SectionType.Free)
+            {
+                possibleDirections.Add(testingDirection);
+            }
+        }
+
+        return possibleDirections;
     }
 
     private SectionSpawner GetSectionSpawner(SectionSpawner originalSpawner, Direction dir)
@@ -244,7 +352,7 @@ public class LevelGeneration : MonoBehaviour
                 break;
         }
 
-        if (CheckValidAndFreeSectionIndex(coordinates))
+        if (CheckIfWithinMapLimit(coordinates))
         {
             return mapSectionSpawners[coordinates.x, coordinates.y];
         }
@@ -280,5 +388,13 @@ public class SectionSpawner
     public SectionType sectionType = SectionType.Free;
     public Vector2 spawnPos;
     public Vector2Int coordinates;
-    public List<Direction> openDirections = new List<Direction>();
+    List<Direction> openDirections = new List<Direction>(); public List<Direction> GetOpenDirections() { return openDirections; }
+
+    public void AddOpenDirection(Direction diretionToAdd)
+    {
+        if (!openDirections.Contains(diretionToAdd))
+        {
+            openDirections.Add(diretionToAdd);
+        }
+    }
 }
