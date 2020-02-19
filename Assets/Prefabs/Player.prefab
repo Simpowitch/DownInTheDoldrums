@@ -111,7 +111,8 @@ MonoBehaviour:
   basicAttack: {fileID: 8288716085651194648, guid: a05a72143206b684ea2217b77e7ef0a1,
     type: 3}
   equipSlotOne: {fileID: 0}
-  equipSlotTwo: {fileID: 0}
+  equipSlotTwo: {fileID: 1418981741801082874, guid: 491f021ea1643a7448a65e451994c4a1,
+    type: 3}
   equipSlotThree: {fileID: 0}
   equipSlotFour: {fileID: 0}
   items: []
@@ -166,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSlot: 0
+  selectIcon: {fileID: 0}
 --- !u!50 &1550569777
 Rigidbody2D:
   serializedVersion: 4
