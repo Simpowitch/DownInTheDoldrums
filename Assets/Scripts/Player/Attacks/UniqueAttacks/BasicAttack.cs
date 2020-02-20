@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAttack : Equipment
+public class BasicAttack : WeaponSpawnedObject
 {
     // Start is called before the first frame update
     void Start()

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(CharacterInteraction), typeof(CharacterMovement), typeof(CharacterWeaponSelect))]
+[RequireComponent(typeof(CharacterAttack), typeof(CharacterMovement), typeof(CharacterWeaponSelect))]
 public class CharacterInput : MonoBehaviour
 {
-    CharacterInteraction interaction;
+    CharacterAttack interaction;
     CharacterMovement movement;
     CharacterWeaponSelect weaponSelect;
 
@@ -14,7 +14,7 @@ public class CharacterInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        interaction = GetComponent<CharacterInteraction>();
+        interaction = GetComponent<CharacterAttack>();
         movement = GetComponent<CharacterMovement>();
         weaponSelect = GetComponent<CharacterWeaponSelect>();
     }
@@ -24,8 +24,8 @@ public class CharacterInput : MonoBehaviour
     {
         weaponSelect.InputCheck(Input.GetAxis("WeaponHorizontal"), Input.GetAxis("WeaponVertical"));
         interaction.InputCheck(Input.GetAxis("HorizontalSecondary"), Input.GetAxis("VerticalSecondary"), weaponSelect.selectedSlot);
-        movement.InputCheck(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
+        movement.InputCheck(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
 
 

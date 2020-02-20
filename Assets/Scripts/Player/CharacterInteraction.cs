@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterInteraction : MonoBehaviour
+public class CharacterAttack : MonoBehaviour
 {
 
     float cooldown;
@@ -16,13 +16,13 @@ public class CharacterInteraction : MonoBehaviour
     public void InputCheck(float xDirection, float yDirection, CharacterWeaponSelect.EquipmentSlots equipmentSlot)
     {
 
-        Equipment equipment = GetEquipment(equipmentSlot);
+        WeaponSpawnedObject equipment = GetEquipment(equipmentSlot);
         //Check attack input
         if (xDirection != 0 || yDirection != 0)
         {
             if (cooldown <= 0)
             {
-                Attack(new EquipmentDirection(Utility.GetDirection(xDirection, yDirection)), equipment);
+                Attack(new RotationDirection(Utility.GetDirection(xDirection, yDirection)), equipment);
                 cooldown = equipment.cooldown;
             }
             else if (cooldown > 0)
@@ -31,7 +31,7 @@ public class CharacterInteraction : MonoBehaviour
             }
         }
     }
-    Equipment GetEquipment(CharacterWeaponSelect.EquipmentSlots equipmentSlot)
+    WeaponSpawnedObject GetEquipment(CharacterWeaponSelect.EquipmentSlots equipmentSlot)
     {
         switch (equipmentSlot)
         {
@@ -81,7 +81,7 @@ public class CharacterInteraction : MonoBehaviour
     }
 
     //Instantiate current ability with it's configuration
-     public void Attack(EquipmentDirection attackDirection, Equipment equipment)
+     public void Attack(RotationDirection attackDirection, WeaponSpawnedObject equipment)
     {
         GameObject newAbility = Instantiate(equipment.gameObject, transform.position + attackDirection.direction, attackDirection.rotation);
         if (equipment.attachedToPlayer)

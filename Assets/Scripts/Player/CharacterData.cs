@@ -14,11 +14,12 @@ public class CharacterData : MonoBehaviour
     public int damage;
     public float movementSpeed;
 
-    public Equipment basicAttack;
-    public Equipment equipSlotOne;
-    public Equipment equipSlotTwo;
-    public Equipment equipSlotThree;
-    public Equipment equipSlotFour;
+    public Weapon basicAttack;
+
+    public Weapon equipSlotOne;
+    public Weapon equipSlotTwo;
+    public Weapon equipSlotThree;
+    public Weapon equipSlotFour;
 
 
     public List<Item> items = new List<Item>();
