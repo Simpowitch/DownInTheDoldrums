@@ -17,13 +17,19 @@ public class LevelGeneration : MonoBehaviour
     public int criticalPathMinLength = 4;
     public int criticalPathMaxLength = 8;
 
-    GameObject[] sectionBlueprints;
+    GameObject[] normalSectionBlueprints;
+    GameObject[] startSectionBlueprints;
+    GameObject[] endSectionBlueprints;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        sectionBlueprints = Resources.LoadAll<GameObject>("MapSections");
+        normalSectionBlueprints = Resources.LoadAll<GameObject>("MapSections/Normal");
+        startSectionBlueprints = Resources.LoadAll<GameObject>("MapSections/Start");
+        endSectionBlueprints = Resources.LoadAll<GameObject>("MapSections/End");
+
+
         GenerateLevel(Random.Range(criticalPathMinLength, criticalPathMaxLength));
     }
 
@@ -63,15 +69,15 @@ public class LevelGeneration : MonoBehaviour
                 case SectionSpawner.SectionType.Free:
                     break;
                 case SectionSpawner.SectionType.StartSection:
-                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections()));
+                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections(), startSectionBlueprints));
                     spawnedObject.transform.position = mapSpawner.spawnPos;
                     break;
                 case SectionSpawner.SectionType.NormalSection:
-                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections()));
+                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections(), normalSectionBlueprints));
                     spawnedObject.transform.position = mapSpawner.spawnPos;
                     break;
                 case SectionSpawner.SectionType.EndSection:
-                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections()));
+                    spawnedObject = Instantiate(FindSectionWithMatchingOpenings(mapSpawner.GetOpenDirections(), endSectionBlueprints));
                     spawnedObject.transform.position = mapSpawner.spawnPos;
                     break;
             }
@@ -80,12 +86,15 @@ public class LevelGeneration : MonoBehaviour
                 spawnedObject.name = mapSpawner.coordinates.ToString() + " " + spawnedObject.name + " " + mapSpawner.sectionType.ToString();
             }
         }
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        playerObject.transform.position = new Vector2(startCoordinates.x * sectionSize, startCoordinates.y * sectionSize);
     }
 
     /// <summary>
     /// Returns a map section which has all the required directions specified in the parameter
     /// </summary>
-    private GameObject FindSectionWithMatchingOpenings(List<Direction> requiredDirections)
+    private GameObject FindSectionWithMatchingOpenings(List<Direction> requiredDirections, GameObject[] sectionBlueprints)
     {
         List<GameObject> fittingBlueprints = new List<GameObject>();
         foreach (GameObject blueprint in sectionBlueprints)

@@ -500,9 +500,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sectionSize: 20
   mapSectionsVectorLimit: 21
-  extraAreaSpawnChance: 30
-  criticalPathMinLength: 5
-  criticalPathMaxLength: 10
+  extraAreaSpawnChance: 50
+  criticalPathMinLength: 7
+  criticalPathMaxLength: 14
 --- !u!1001 &2048223660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -526,6 +526,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3142856607104787267, guid: a05a72143206b684ea2217b77e7ef0a1,
         type: 3}
+    - target: {fileID: 8863047245186003520, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8863047245186003522, guid: ca1029c06da72ba489a4a54dc0a14cc2,
         type: 3}
       propertyPath: m_Name
@@ -794,6 +799,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1265127650730178419, guid: 767240b990b34bf4c988fc494dd36acf,
+        type: 3}
+      propertyPath: item.effects.Array.data[0].change
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1265127650730178445, guid: 767240b990b34bf4c988fc494dd36acf,
         type: 3}
       propertyPath: m_Name
@@ -937,6 +947,56 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[1].effectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[1].change
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[2].effectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[2].change
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[3].effectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[3].change
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[4].effectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[4].change
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207538299838693206, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
+        type: 3}
+      propertyPath: item.effects.Array.data[0].change
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5207538299838693288, guid: 9a50cdc4464fb5b44bad35eaf7d81937,
         type: 3}
       propertyPath: m_Name
@@ -1074,6 +1134,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218398460211653338, guid: f6261a2cd318fe042a7f209a401aa347,
+        type: 3}
+      propertyPath: item.effects.Array.data[0].change
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9218398460211653342, guid: f6261a2cd318fe042a7f209a401aa347,
         type: 3}
