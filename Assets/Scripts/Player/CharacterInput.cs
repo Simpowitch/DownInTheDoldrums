@@ -19,6 +19,11 @@ public class CharacterInput : MonoBehaviour
         weaponSelect = GetComponent<CharacterWeaponSelect>();
     }
 
+    private void Start()
+    {
+        weaponSelect.InputCheck(Direction.Up);
+    }
+
     // Update is called once per frame
     void Update()
     {

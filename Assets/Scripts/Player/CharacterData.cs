@@ -36,39 +36,81 @@ public class CharacterData : MonoBehaviour
         UpdateHealthBar();
         if (health <= 0)
         {
-            print("dead");
+            Die();
         }
+        
     }
 
     private void UpdateHealthBar()
     {
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.SetHealth(health);
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+            healthBar.SetHealth(health);
+        }
+
     }
 
     public void AddItem(Item newItem)
     {
-        items.Add(newItem);
-        foreach (Effect newEffect in newItem.effects)
-        {
-            switch (newEffect.effectType)
-            {
-                case EffectType.Damage:
-                    damage += newEffect.change;
-                    break;
-                case EffectType.MovementSpeed:
-                    movementSpeed += newEffect.change;
-                    break;
-                case EffectType.MaxHP:
-                    maxHealth += newEffect.change;
-                    break;
-                case EffectType.InstantHeal:
-                    health += newEffect.change;
-                    break;
-            }
-        }
+        //items.Add(newItem);
+        //foreach (Effect newEffect in newItem.effects)
+        //{
+        //    switch (newEffect.effectType)
+        //    {
+        //        case EffectType.Damage:
+        //            damage += newEffect.change;
+        //            break;
+        //        case EffectType.MovementSpeed:
+        //            movementSpeed += newEffect.change;
+        //            break;
+        //        case EffectType.MaxHP:
+        //            maxHealth += newEffect.change;
+        //            break;
+        //        case EffectType.InstantHeal:
+        //            health += newEffect.change;
+        //            break;
+        //    }
+        //}
 
-        //Update UI to show changes
-        UpdateHealthBar();
+        ////Update UI to show changes
+        //UpdateHealthBar();
+    }
+
+
+    void Die()
+    {
+
+        if (gameObject.tag == "Enemy")
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            print("Dead");
+        }
+        
+    }
+
+
+    List<Effect> continuousEffects = new List<Effect>();
+    List<Effect> limitedTimeEffects = new List<Effect>();
+
+    public void AddEffect(Effect effect)
+    {
+        switch (effect.GetEffectType())
+        {
+            case EffectType.Instant:
+                effect.ApplyEffect(this);
+                break;
+            case EffectType.Continuous:
+                continuousEffects.Add(effect);
+                break;
+            case EffectType.LimitedTime:
+                limitedTimeEffects.Add(effect);
+                break;
+            default:
+                break;
+        }
     }
 }

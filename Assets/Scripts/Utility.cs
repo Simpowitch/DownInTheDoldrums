@@ -10,21 +10,30 @@ public static class Utility
     ///</summary>
     public static Direction GetDirection(float xDirection, float yDirection)
     {
-        if (xDirection < 0)
+        float deltaX = Mathf.Abs(xDirection);
+        float deltaY = Mathf.Abs(yDirection);
+
+        if (deltaX > deltaY)
         {
-            return Direction.Left;
+            if (xDirection < 0)
+            {
+                return Direction.Left;
+            }
+            if (xDirection > 0)
+            {
+                return Direction.Right;
+            }
         }
-        if (xDirection > 0)
+        else
         {
-            return Direction.Right;
-        }
-        if (yDirection < 0)
-        {
-            return Direction.Down;
-        }
-        if (yDirection > 0)
-        {
-            return Direction.Up;
+            if (yDirection < 0)
+            {
+                return Direction.Down;
+            }
+            if (yDirection > 0)
+            {
+                return Direction.Up;
+            }
         }
         return Direction.None;
     }

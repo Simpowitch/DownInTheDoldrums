@@ -13,6 +13,6 @@ public class CharacterAttack : MonoBehaviour
 
     public void InputCheck(Direction interactDirection)
     {
-        characterData.selectedWeaponHolder.Attack(new RotationDirection(interactDirection));
+        characterData.selectedWeaponHolder.Attack(new RotationDirection(interactDirection), "Player");
     }
 }

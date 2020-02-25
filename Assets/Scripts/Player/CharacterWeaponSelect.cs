@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class CharacterWeaponSelect : MonoBehaviour
 {
-
-
     [SerializeField] Image selectIcon = null;
 
     CharacterData characterData;
@@ -15,10 +13,7 @@ public class CharacterWeaponSelect : MonoBehaviour
     {
         characterData = GetComponent<CharacterData>();
     }
-    void Start()
-    {
-        InputCheck(Direction.Up);
-    }
+   
 
     public void InputCheck(Direction inputDirection)
     {
@@ -49,7 +44,7 @@ public class CharacterWeaponSelect : MonoBehaviour
         }
     }
 
-    void SelectWeapon(CharacterWeaponHolder weaponHolder)
+    public void SelectWeapon(CharacterWeaponHolder weaponHolder)
     {
         if (characterData.selectedWeaponHolder != null)
         {

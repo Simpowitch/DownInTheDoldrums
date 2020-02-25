@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ProjectileAttack : WeaponSpawnedObject
 {
-    public float speed;
     Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -21,12 +20,22 @@ public class ProjectileAttack : WeaponSpawnedObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy")
+        if (collision.tag == ignoreTag)
         {
-            collision.GetComponent<EnemyAI>().TakeDamage(base.damage);
+            Destroy(gameObject);
+            return;
+        }
+
+        if (collision.tag == "Enemy" || collision.tag == "Player")
+        {
+            CharacterData characterData = collision.GetComponent<CharacterData>();
+            foreach (Effect effect in base.effects)
+            {
+                characterData.AddEffect(effect);
+            }
             Destroy(gameObject);
         }
-        else if (collision.tag != "Player")
+        else
         {
             Destroy(gameObject);
         }

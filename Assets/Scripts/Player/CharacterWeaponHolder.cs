@@ -15,15 +15,17 @@ public class CharacterWeaponHolder : MonoBehaviour
         }
     }
 
-    public void Attack(RotationDirection attackDirection)
+    public void Attack(RotationDirection attackDirection, string ignoreTag)
     {
         if (cooldownTimer <= 0)
         {
             GameObject spawnedObject = Instantiate(myWeapon.spawnableObject.gameObject, transform.position + attackDirection.direction, attackDirection.rotation);
-            if (spawnedObject.GetComponent<WeaponSpawnedObject>().attachedToPlayer)
+            WeaponSpawnedObject weaponSpawnedObject = spawnedObject.GetComponent<WeaponSpawnedObject>();
+            if (weaponSpawnedObject.attachToCharacter)
             {
                 spawnedObject.transform.SetParent(transform);
             }
+            weaponSpawnedObject.ignoreTag = ignoreTag;
             
             cooldownTimer = myWeapon.cooldown;
         }
