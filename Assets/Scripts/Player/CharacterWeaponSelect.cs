@@ -5,61 +5,67 @@ using UnityEngine.UI;
 
 public class CharacterWeaponSelect : MonoBehaviour
 {
-    public enum EquipmentSlots {EquipOne, EquipTwo, EquipThree, EquipFour}
-    public EquipmentSlots selectedSlot;
-    public Weapon selectedWeapon;
+
 
     [SerializeField] Image selectIcon = null;
 
     CharacterData characterData;
 
+    private void Awake()
+    {
+        characterData = GetComponent<CharacterData>();
+    }
     void Start()
     {
-        characterData = GetComponent<CharacterData>();      
+        InputCheck(Direction.Up);
     }
 
-    public void InputCheck(float horizontal, float vertical)
+    public void InputCheck(Direction inputDirection)
     {
-        if (horizontal > 0)
+        switch (inputDirection)
         {
-            selectedSlot = EquipmentSlots.EquipTwo;
-            selectIcon.transform.localPosition = new Vector3(30,0);
-            SetWeapon(characterData.equipSlotTwo);
-        }
-        if (horizontal < 0)
-        {
-            selectedSlot = EquipmentSlots.EquipFour;
-            selectIcon.transform.localPosition = new Vector3(-30, 0);
-            SetWeapon(characterData.equipSlotFour);
-        }
-        if (vertical > 0)
-        {
-            selectedSlot = EquipmentSlots.EquipOne;
-            selectIcon.transform.localPosition = new Vector3(0, 30);
-            SetWeapon(characterData.equipSlotOne);
-        }
-        if (vertical < 0)
-        {
-            selectedSlot = EquipmentSlots.EquipThree;
-            selectIcon.transform.localPosition = new Vector3(0, -30);
-            SetWeapon(characterData.equipSlotThree);
+            case Direction.Up:
+                selectIcon.transform.localPosition = new Vector3(0, 30);
+                SelectWeapon(characterData.equipSlotOne);
+                break;
+
+            case Direction.Right:
+                selectIcon.transform.localPosition = new Vector3(30, 0);
+                SelectWeapon(characterData.equipSlotTwo);
+                break;
+
+            case Direction.Down:
+                selectIcon.transform.localPosition = new Vector3(0, -30);
+                SelectWeapon(characterData.equipSlotThree);
+                break;
+
+            case Direction.Left:
+                selectIcon.transform.localPosition = new Vector3(-30, 0);
+                SelectWeapon(characterData.equipSlotFour);
+                break;
+
+            default:
+                break;
         }
     }
 
-    void SetWeapon(Weapon weapon)
+    void SelectWeapon(CharacterWeaponHolder weaponHolder)
     {
-        //ActivateSprite
-        /*
-         
-        .sprite = disable;
+        if (characterData.selectedWeaponHolder != null)
+        {
+            characterData.selectedWeaponHolder.mySpriteRenderer.enabled = false;
+        }
 
-        selectedWeapon = weapon;
+        if (weaponHolder.myWeapon == null)
+        {
+            characterData.selectedWeaponHolder = weaponHolder;
+            characterData.selectedWeaponHolder.myWeapon = characterData.basicAttack;
+        }
+        else
+        {
+            characterData.selectedWeaponHolder = weaponHolder;
+        }
 
-        selectedWeapon. sprite = enable;
-
-
-        */
-
-        //inactivatePrevious
+        characterData.selectedWeaponHolder.mySpriteRenderer.GetComponent<SpriteRenderer>().enabled = true;
     }
 }

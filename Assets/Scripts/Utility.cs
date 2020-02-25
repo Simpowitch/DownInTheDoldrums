@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Direction {Up, Right, Down, Left, None}
 public static class Utility
 {
     ///<summary>
@@ -25,7 +26,7 @@ public static class Utility
         {
             return Direction.Up;
         }
-        return Direction.Down;
+        return Direction.None;
     }
 
 }

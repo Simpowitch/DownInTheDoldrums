@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon/New Weapon")]
+public class Weapon : ScriptableObject
 {
     public float damage;
-    public float fireRate;
-    public WeaponSpawnedObject spwnableObject;
+    public float cooldown;
+    public GameObject spawnableObject;
+
 }

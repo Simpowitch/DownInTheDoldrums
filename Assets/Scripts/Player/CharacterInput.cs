@@ -12,7 +12,7 @@ public class CharacterInput : MonoBehaviour
 
    
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         interaction = GetComponent<CharacterAttack>();
         movement = GetComponent<CharacterMovement>();
@@ -22,11 +22,23 @@ public class CharacterInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        weaponSelect.InputCheck(Input.GetAxis("WeaponHorizontal"), Input.GetAxis("WeaponVertical"));
-        interaction.InputCheck(Input.GetAxis("HorizontalSecondary"), Input.GetAxis("VerticalSecondary"), weaponSelect.selectedSlot);
+        if (IsAxisUsed("WeaponHorizontal", "WeaponVertical"))
+        {
+            weaponSelect.InputCheck(Utility.GetDirection(Input.GetAxis("WeaponHorizontal"), Input.GetAxis("WeaponVertical")));
+        }
+        if (IsAxisUsed("HorizontalSecondary", "VerticalSecondary"))
+        {
+            interaction.InputCheck(Utility.GetDirection(Input.GetAxis("HorizontalSecondary"), Input.GetAxis("VerticalSecondary")));
+        }
 
         movement.InputCheck(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
+
+    bool IsAxisUsed(string horizontal, string vertical)
+    {
+        return Input.GetAxis(horizontal) != 0 || Input.GetAxis(vertical) != 0;
+    }
+
 
 
 

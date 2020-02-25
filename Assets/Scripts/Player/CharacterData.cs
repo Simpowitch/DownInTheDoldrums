@@ -16,11 +16,12 @@ public class CharacterData : MonoBehaviour
 
     public Weapon basicAttack;
 
-    public Weapon equipSlotOne;
-    public Weapon equipSlotTwo;
-    public Weapon equipSlotThree;
-    public Weapon equipSlotFour;
+    public CharacterWeaponHolder equipSlotOne;
+    public CharacterWeaponHolder equipSlotTwo;
+    public CharacterWeaponHolder equipSlotThree;
+    public CharacterWeaponHolder equipSlotFour;
 
+    public CharacterWeaponHolder selectedWeaponHolder;
 
     public List<Item> items = new List<Item>();
 

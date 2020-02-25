@@ -190,6 +190,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d14adbf1018483d49a7f62b281fe3acd, type: 3}
+--- !u!212 &230604452 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2026521463673701373, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8863047243909505903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &660069018 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6903511941063073259, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8863047243909505903}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &799951206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1067,6 +1079,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1829161478 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2351762128832621296, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8863047243909505903}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1979472308 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1122793932978495038, guid: 18951b328a49faa45b0f42470af54b2d,
@@ -1185,6 +1203,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!212 &2093630376 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6043209501623195561, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8863047243909505903}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2145549669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1385,11 +1409,31 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1979472309}
+    - target: {fileID: 1463996241139975258, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: mySpriteRenderer
+      value: 
+      objectReference: {fileID: 230604452}
+    - target: {fileID: 1895520752131526078, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: mySpriteRenderer
+      value: 
+      objectReference: {fileID: 2093630376}
     - target: {fileID: 3179608269834658806, guid: ca1029c06da72ba489a4a54dc0a14cc2,
         type: 3}
       propertyPath: selectIcon
       value: 
       objectReference: {fileID: 1507163209}
+    - target: {fileID: 6841949567960348273, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: mySpriteRenderer
+      value: 
+      objectReference: {fileID: 1829161478}
+    - target: {fileID: 7501184764562187968, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: mySpriteRenderer
+      value: 
+      objectReference: {fileID: 660069018}
     - target: {fileID: 8863047245186003522, guid: ca1029c06da72ba489a4a54dc0a14cc2,
         type: 3}
       propertyPath: m_Name
