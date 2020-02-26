@@ -3,21 +3,20 @@ using UnityEngine;
 public enum EffectType { Instant, Continuous, LimitedTime}
 
 
-public class Effect : ScriptableObject, IEffect
+public class Effect : ScriptableObject//, //IEffect
 {
 
     public EffectType effectType;
 
     public bool isTickBased;
     public float tickRate;
-    public float tickTimeRemaining;
 
     public float duration;
 
 
     public virtual void ApplyEffect(CharacterData target)
     {
-        tickTimeRemaining += tickRate;
+
     }
 
     public virtual void RemoveEffect(CharacterData target)
@@ -31,8 +30,8 @@ public class Effect : ScriptableObject, IEffect
     }
 }
 
-public interface IEffect
-{
-    EffectType GetEffectType();
-    void ApplyEffect(CharacterData target);
-}
+//public interface IEffect
+//{
+//    EffectType GetEffectType();
+//    void ApplyEffect(CharacterData target);
+//}

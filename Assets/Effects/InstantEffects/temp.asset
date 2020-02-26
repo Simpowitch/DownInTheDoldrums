@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2eae1246193123498257f32afec8174, type: 3}
-  m_Name: 2Damage
+  m_Script: {fileID: 11500000, guid: 7fe62f7460491ad4e80b6dfb564b2016, type: 3}
+  m_Name: temp
   m_EditorClassIdentifier: 
   effectType: 0
-  damage: 2
+  isTickBased: 0
+  tickRate: 0
+  duration: 0
+  slowPercentage: 10

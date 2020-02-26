@@ -8,10 +8,11 @@ public class Weapon : ScriptableObject
     public float damage;
     public float cooldown;
     public GameObject spawnableObject;
+    public List<Effect> onHitEffects = new List<Effect>();
 
     public float GetExpectedRange()
     {
         WeaponSpawnedObject weaponSpawnedObject = spawnableObject.GetComponent<WeaponSpawnedObject>();
-        return weaponSpawnedObject.speed * weaponSpawnedObject.duration;
+        return weaponSpawnedObject.speed * weaponSpawnedObject.objectLifetime;
     }
 }

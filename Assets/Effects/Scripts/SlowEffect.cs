@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Effect/New Freeze Effect", fileName = "New Freeze Effect")]
-public class FreezeEffect : Effect
+[CreateAssetMenu(menuName = "Effect/New Slow Effect", fileName = "New Slow Effect")]
+public class SlowEffect : Effect
 {
-    [SerializeField][Range(0,99)] float slowPercentage;
-    [SerializeField] float minSpeed;
+    [SerializeField][Range(0,99)] float slowPercentage = 10;
     public override void ApplyEffect(CharacterData target)
     {
             base.ApplyEffect(target);

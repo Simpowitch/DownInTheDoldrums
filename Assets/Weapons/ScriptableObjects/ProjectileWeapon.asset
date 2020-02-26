@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b7b0d1b0668b743b12ed438f5cd830, type: 3}
   m_Name: ProjectileWeapon
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 2
   cooldown: 1
   spawnableObject: {fileID: 1418981741801082873, guid: 491f021ea1643a7448a65e451994c4a1,
     type: 3}
+  onHitEffects:
+  - {fileID: 0}
