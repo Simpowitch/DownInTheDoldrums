@@ -147,9 +147,10 @@ public class CharacterData : MonoBehaviour
 
     IEnumerator DoLimitedTimeEffect(Effect effect, float timeRemaining)
     {
-        if (timeRemaining < 0)
+        if (timeRemaining <= 0)
         {
             limitedTimeEffects.Remove(effect);
+            effect.RemoveEffect(this);
             yield return null;
         }
         else if (effect.isTickBased)

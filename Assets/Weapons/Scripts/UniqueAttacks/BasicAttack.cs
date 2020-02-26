@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class BasicAttack : WeaponSpawnedObject
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == ignoreTag)
         {
             return;
         }
 
+
         if (other.tag == "Enemy" || other.tag == "Player")
         {
             CharacterData characterData = other.GetComponent<CharacterData>();
+            base.ApplyDamage(characterData);
 
             foreach (Effect effect in base.effects)
             {

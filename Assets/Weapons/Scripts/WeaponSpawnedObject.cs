@@ -8,6 +8,9 @@ public class WeaponSpawnedObject : MonoBehaviour
     public float objectLifetime;
     public float speed;
 
+    [HideInInspector]
+    public int damage;
+
     public bool attachToCharacter;
 
     [HideInInspector]
@@ -21,5 +24,10 @@ public class WeaponSpawnedObject : MonoBehaviour
     public void AddEffects(List<Effect> newEffects)
     {
         effects = newEffects;
+    }
+
+    public void ApplyDamage(CharacterData characterData)
+    {
+        characterData.TakeDamage(damage);
     }
 }

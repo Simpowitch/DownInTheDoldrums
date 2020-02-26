@@ -3,7 +3,7 @@ using UnityEngine;
 public enum EffectType { Instant, Continuous, LimitedTime}
 
 
-public class Effect : ScriptableObject, IEffect
+public class Effect : ScriptableObject//, //IEffect
 {
 
     public EffectType effectType;
@@ -30,8 +30,8 @@ public class Effect : ScriptableObject, IEffect
     }
 }
 
-public interface IEffect
-{
-    EffectType GetEffectType();
-    void ApplyEffect(CharacterData target);
-}
+//public interface IEffect
+//{
+//    EffectType GetEffectType();
+//    void ApplyEffect(CharacterData target);
+//}

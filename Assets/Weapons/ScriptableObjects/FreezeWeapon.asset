@@ -18,3 +18,4 @@ MonoBehaviour:
     type: 3}
   onHitEffects:
   - {fileID: 11400000, guid: 0b87b5aa3cd226448b299a0939777ede, type: 2}
+  - {fileID: 11400000, guid: a53ff802cd685e642879de2f7c965ece, type: 2}

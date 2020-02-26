@@ -21,7 +21,6 @@ public class ProjectileAttack : WeaponSpawnedObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-      
         if (collision.tag == ignoreTag)
         {
             return;
@@ -30,6 +29,8 @@ public class ProjectileAttack : WeaponSpawnedObject
         if (collision.tag == "Enemy" || collision.tag == "Player")
         {
             CharacterData characterData = collision.GetComponent<CharacterData>();
+            base.ApplyDamage(characterData);
+
             foreach (Effect effect in base.effects)
             {
                 characterData.AddEffect(effect);

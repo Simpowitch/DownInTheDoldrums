@@ -16,4 +16,4 @@ MonoBehaviour:
   isTickBased: 0
   tickRate: 0
   duration: 5
-  slowPercentage: 50
+  slowPercentage: 75

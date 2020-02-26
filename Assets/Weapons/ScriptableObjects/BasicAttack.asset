@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b7b0d1b0668b743b12ed438f5cd830, type: 3}
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 5
   cooldown: 0.5
   spawnableObject: {fileID: 3142856607104787267, guid: a05a72143206b684ea2217b77e7ef0a1,
     type: 3}
-  onHitEffects:
-  - {fileID: 11400000, guid: 90787739795826c42bf95527f63b898a, type: 2}
+  onHitEffects: []
