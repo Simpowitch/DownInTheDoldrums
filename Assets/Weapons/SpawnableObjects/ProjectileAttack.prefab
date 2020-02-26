@@ -96,9 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a606c9dd9f7ae84ba9391a1c87caecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  effects:
+  - {fileID: 11400000, guid: 77f603edd26edc8459374b565ddd5ee7, type: 2}
   duration: 1
-  cooldown: 0.3
   attachedToPlayer: 0
   speed: 25
 --- !u!61 &4197976549652529064

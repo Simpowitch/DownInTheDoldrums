@@ -3,30 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(CharacterInteraction), typeof(CharacterMovement), typeof(CharacterWeaponSelect))]
+[RequireComponent(typeof(CharacterAttack), typeof(CharacterMovement), typeof(CharacterWeaponSelect))]
 public class CharacterInput : MonoBehaviour
 {
-    CharacterInteraction interaction;
+    CharacterAttack interaction;
     CharacterMovement movement;
     CharacterWeaponSelect weaponSelect;
 
    
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        interaction = GetComponent<CharacterInteraction>();
+        interaction = GetComponent<CharacterAttack>();
         movement = GetComponent<CharacterMovement>();
         weaponSelect = GetComponent<CharacterWeaponSelect>();
+    }
+
+    private void Start()
+    {
+        weaponSelect.InputCheck(Direction.Up);
     }
 
     // Update is called once per frame
     void Update()
     {
-        weaponSelect.InputCheck(Input.GetAxis("WeaponHorizontal"), Input.GetAxis("WeaponVertical"));
-        interaction.InputCheck(Input.GetAxis("HorizontalSecondary"), Input.GetAxis("VerticalSecondary"), weaponSelect.selectedSlot);
-        movement.InputCheck(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (IsAxisUsed("WeaponHorizontal", "WeaponVertical"))
+        {
+            weaponSelect.InputCheck(Utility.GetDirection(Input.GetAxis("WeaponHorizontal"), Input.GetAxis("WeaponVertical")));
+        }
+        if (IsAxisUsed("HorizontalSecondary", "VerticalSecondary"))
+        {
+            interaction.InputCheck(Utility.GetDirection(Input.GetAxis("HorizontalSecondary"), Input.GetAxis("VerticalSecondary")));
+        }
 
+        movement.InputCheck(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
+
+    bool IsAxisUsed(string horizontal, string vertical)
+    {
+        return Input.GetAxis(horizontal) != 0 || Input.GetAxis(vertical) != 0;
+    }
+
 
 
 

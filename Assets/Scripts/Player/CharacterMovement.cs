@@ -13,7 +13,7 @@ public class CharacterMovement : MonoBehaviour
 
     Vector2 noramlizedMovement;
 
-    void Start()
+    void Awake()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myStats = GetComponent<CharacterData>();

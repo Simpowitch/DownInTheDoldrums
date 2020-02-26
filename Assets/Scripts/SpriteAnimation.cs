@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Direction { Left, Right, Up, Down }
+
 
 public class SpriteAnimation : MonoBehaviour
 {

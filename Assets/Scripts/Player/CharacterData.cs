@@ -14,18 +14,25 @@ public class CharacterData : MonoBehaviour
     public int damage;
     public float movementSpeed;
 
-    public Equipment basicAttack;
-    public Equipment equipSlotOne;
-    public Equipment equipSlotTwo;
-    public Equipment equipSlotThree;
-    public Equipment equipSlotFour;
+    public Weapon basicAttack;
 
+    public CharacterWeaponHolder equipSlotOne;
+    public CharacterWeaponHolder equipSlotTwo;
+    public CharacterWeaponHolder equipSlotThree;
+    public CharacterWeaponHolder equipSlotFour;
+
+    public CharacterWeaponHolder selectedWeaponHolder;
 
     public List<Item> items = new List<Item>();
 
     private void Start()
     {
         UpdateHealthBar();
+    }
+    private void Update()
+    {
+        ContinuousEffects();
+        LimitedTimeEffects();
     }
 
     public void TakeDamage(int damage)
@@ -34,39 +41,129 @@ public class CharacterData : MonoBehaviour
         UpdateHealthBar();
         if (health <= 0)
         {
-            print("dead");
+            Die();
         }
+        
     }
 
     private void UpdateHealthBar()
     {
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.SetHealth(health);
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+            healthBar.SetHealth(health);
+        }
+
     }
 
     public void AddItem(Item newItem)
     {
-        items.Add(newItem);
-        foreach (Effect newEffect in newItem.effects)
+        //items.Add(newItem);
+        //foreach (Effect newEffect in newItem.effects)
+        //{
+        //    switch (newEffect.effectType)
+        //    {
+        //        case EffectType.Damage:
+        //            damage += newEffect.change;
+        //            break;
+        //        case EffectType.MovementSpeed:
+        //            movementSpeed += newEffect.change;
+        //            break;
+        //        case EffectType.MaxHP:
+        //            maxHealth += newEffect.change;
+        //            break;
+        //        case EffectType.InstantHeal:
+        //            health += newEffect.change;
+        //            break;
+        //    }
+        //}
+
+        ////Update UI to show changes
+        //UpdateHealthBar();
+    }
+
+
+    void Die()
+    {
+
+        if (gameObject.tag == "Enemy")
         {
-            switch (newEffect.effectType)
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            print("Dead");
+        }
+        
+    }
+
+    List<Effect> continuousEffects = new List<Effect>();
+    List<Effect> limitedTimeEffects = new List<Effect>();
+
+    public void AddEffect(Effect effect)
+    {
+        switch (effect.GetEffectType())
+        {
+            case EffectType.Instant:
+                effect.ApplyEffect(this);
+                break;
+            case EffectType.Continuous:
+                continuousEffects.Add(effect);
+                effect.ApplyEffect(this);
+                break;
+            case EffectType.LimitedTime:
+                limitedTimeEffects.Add(effect);
+                effect.ApplyEffect(this);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ContinuousEffects()
+    {
+        foreach (Effect effect in continuousEffects)
+        {
+            if (effect.isTickBased)
             {
-                case EffectType.Damage:
-                    damage += newEffect.change;
-                    break;
-                case EffectType.MovementSpeed:
-                    movementSpeed += newEffect.change;
-                    break;
-                case EffectType.MaxHP:
-                    maxHealth += newEffect.change;
-                    break;
-                case EffectType.InstantHeal:
-                    health += newEffect.change;
-                    break;
+                TickEffect(effect);
             }
         }
+    }
+    void LimitedTimeEffects()
+    {
+        List<Effect> removeEffects = new List<Effect>();
 
-        //Update UI to show changes
-        UpdateHealthBar();
+        foreach (Effect effect in limitedTimeEffects)
+        {
+            if (effect.isTickBased)
+            {
+                TickEffect(effect);
+            }
+
+            effect.duration -= Time.deltaTime;
+            if (effect.duration <= 0)
+            {
+                effect.RemoveEffect(this);
+                removeEffects.Add(effect);
+            }
+        }
+        foreach (Effect effect in removeEffects)
+        {
+            limitedTimeEffects.Remove(effect);
+        }
+    }
+
+    void TickEffect(Effect effect)
+    {
+        if (effect.tickTimeRemaining <= 0)
+        {
+            effect.tickTimeRemaining += effect.tickRate;
+            effect.ApplyEffect(this);
+        }
+        else
+        {
+            effect.tickTimeRemaining -= Time.deltaTime;
+        }
     }
 }
