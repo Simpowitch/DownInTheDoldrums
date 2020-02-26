@@ -31,8 +31,8 @@ public class CharacterData : MonoBehaviour
     }
     private void Update()
     {
-        ContinuousEffects();
-        LimitedTimeEffects();
+        //ContinuousEffects();
+        //LimitedTimeEffects();
     }
 
     public void TakeDamage(int damage)
@@ -97,8 +97,10 @@ public class CharacterData : MonoBehaviour
         
     }
 
-    List<Effect> continuousEffects = new List<Effect>();
-    List<Effect> limitedTimeEffects = new List<Effect>();
+
+    #region Effects
+    List<Effect> continuousEffects = new List<Effect>(); //Used to store all continuous effects
+    List<Effect> limitedTimeEffects = new List<Effect>(); //Used to store all temporary, but time-lingering, effects
 
     public void AddEffect(Effect effect)
     {
@@ -108,62 +110,62 @@ public class CharacterData : MonoBehaviour
                 effect.ApplyEffect(this);
                 break;
             case EffectType.Continuous:
+                if (continuousEffects.Contains(effect))
+                {
+                    break;
+                }
                 continuousEffects.Add(effect);
-                effect.ApplyEffect(this);
+                StartCoroutine(DoContinuousEffect(effect));
                 break;
             case EffectType.LimitedTime:
+                if (limitedTimeEffects.Contains(effect))
+                {
+                    break;
+                }
                 limitedTimeEffects.Add(effect);
-                effect.ApplyEffect(this);
+                StartCoroutine(DoLimitedTimeEffect(effect, effect.duration));
                 break;
             default:
                 break;
         }
     }
-
-    void ContinuousEffects()
+    
+    IEnumerator DoContinuousEffect(Effect effect)
     {
-        foreach (Effect effect in continuousEffects)
+        if (effect.isTickBased)
         {
-            if (effect.isTickBased)
-            {
-                TickEffect(effect);
-            }
+            effect.ApplyEffect(this);
+            yield return new WaitForSeconds(effect.tickRate);
+            //Recursion
+            StartCoroutine(DoContinuousEffect(effect));
+        }
+        else //One time effect - lingering with possible listeners or checks from the list
+        {
+            effect.ApplyEffect(this);
         }
     }
-    void LimitedTimeEffects()
+
+    IEnumerator DoLimitedTimeEffect(Effect effect, float timeRemaining)
     {
-        List<Effect> removeEffects = new List<Effect>();
-
-        foreach (Effect effect in limitedTimeEffects)
+        if (timeRemaining < 0)
         {
-            if (effect.isTickBased)
-            {
-                TickEffect(effect);
-            }
-
-            effect.duration -= Time.deltaTime;
-            if (effect.duration <= 0)
-            {
-                effect.RemoveEffect(this);
-                removeEffects.Add(effect);
-            }
+            limitedTimeEffects.Remove(effect);
+            yield return null;
         }
-        foreach (Effect effect in removeEffects)
+        else if (effect.isTickBased)
         {
+            effect.ApplyEffect(this);
+            yield return new WaitForSeconds(effect.tickRate);
+            //Recursion
+            StartCoroutine(DoLimitedTimeEffect(effect, timeRemaining-effect.tickRate));
+        }
+        else //One time effect - wait - remove effect
+        {
+            effect.ApplyEffect(this);
+            yield return new WaitForSeconds(timeRemaining);
+            effect.RemoveEffect(this);
             limitedTimeEffects.Remove(effect);
         }
     }
-
-    void TickEffect(Effect effect)
-    {
-        if (effect.tickTimeRemaining <= 0)
-        {
-            effect.tickTimeRemaining += effect.tickRate;
-            effect.ApplyEffect(this);
-        }
-        else
-        {
-            effect.tickTimeRemaining -= Time.deltaTime;
-        }
-    }
+    #endregion
 }

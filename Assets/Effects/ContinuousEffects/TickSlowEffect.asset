@@ -10,6 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fe62f7460491ad4e80b6dfb564b2016, type: 3}
-  m_Name: FreezeBall
+  m_Name: TickSlowEffect
   m_EditorClassIdentifier: 
-  effectType: 0
+  effectType: 1
+  isTickBased: 1
+  tickRate: 0.5
+  duration: 0
+  slowPercentage: 10

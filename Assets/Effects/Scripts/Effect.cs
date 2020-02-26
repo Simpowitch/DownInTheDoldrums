@@ -10,14 +10,13 @@ public class Effect : ScriptableObject, IEffect
 
     public bool isTickBased;
     public float tickRate;
-    public float tickTimeRemaining;
 
     public float duration;
 
 
     public virtual void ApplyEffect(CharacterData target)
     {
-        tickTimeRemaining += tickRate;
+
     }
 
     public virtual void RemoveEffect(CharacterData target)

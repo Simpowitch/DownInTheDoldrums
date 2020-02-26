@@ -25,6 +25,7 @@ public class CharacterWeaponHolder : MonoBehaviour
             {
                 spawnedObject.transform.SetParent(transform);
             }
+            weaponSpawnedObject.AddEffects(myWeapon.onHitEffects);
             weaponSpawnedObject.ignoreTag = ignoreTag;
             
             cooldownTimer = myWeapon.cooldown;

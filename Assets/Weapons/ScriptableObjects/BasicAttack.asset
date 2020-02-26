@@ -16,3 +16,5 @@ MonoBehaviour:
   cooldown: 0.5
   spawnableObject: {fileID: 3142856607104787267, guid: a05a72143206b684ea2217b77e7ef0a1,
     type: 3}
+  onHitEffects:
+  - {fileID: 11400000, guid: 90787739795826c42bf95527f63b898a, type: 2}
