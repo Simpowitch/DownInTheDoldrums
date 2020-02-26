@@ -4,28 +4,59 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyAI : MonoBehaviour
 {
-    private enum State { Idle, Move, Attack}
+    private enum State { Idle, Move, Attack }
     State currentState = State.Idle;
 
     GameObject playerObject = null;
     SpriteAnimation characterVisualUpdater;
     Rigidbody2D rb;
 
-    [SerializeField] float movementSpeed = 1;
-    [SerializeField] float attackDistance = 0.75f;
+    float attackRange = 0;
+    [SerializeField] float minimumAttackRange = 0.5f;
     [SerializeField] float detectionRange = 10f;
+    CharacterData characterData;
+    CharacterWeaponSelect weaponSelector;
 
-    [SerializeField] float attackCooldown = 3;
-    float attackCooldownTimer = 0;
+    private void Awake()
+    {
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        characterData = GetComponent<CharacterData>();
+        characterVisualUpdater = GetComponent<SpriteAnimation>();
+        rb = GetComponent<Rigidbody2D>();
+        weaponSelector = GetComponent<CharacterWeaponSelect>();
+    }
 
-    [SerializeField] int damagePerAttack = 1;
-    [SerializeField] int hp = 10;
 
     private void Start()
     {
-        playerObject = GameObject.FindGameObjectWithTag("Player");
-        characterVisualUpdater = GetComponent<SpriteAnimation>();
-        rb = GetComponent<Rigidbody2D>();
+        ChangeWeapon(0);
+    }
+
+    private void CalculateAttackRange()
+    {
+        attackRange = Mathf.Max(minimumAttackRange, characterData.selectedWeaponHolder.myWeapon.GetExpectedRange());
+    }
+
+    private void ChangeWeapon(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                weaponSelector.SelectWeapon(characterData.equipSlotOne);
+                break;
+            case 1:
+                weaponSelector.SelectWeapon(characterData.equipSlotTwo);
+                break;
+            case 2:
+                weaponSelector.SelectWeapon(characterData.equipSlotThree);
+                break;
+            case 3:
+                weaponSelector.SelectWeapon(characterData.equipSlotFour);
+                break;
+            default:
+                break;
+        }
+        CalculateAttackRange();
     }
 
     // Update is called once per frame
@@ -41,8 +72,6 @@ public class EnemyAI : MonoBehaviour
 
     private State FSM(State inputState)
     {
-        CooldownTimers();
-
         switch (inputState)
         {
             case State.Idle:
@@ -53,7 +82,7 @@ public class EnemyAI : MonoBehaviour
                 characterVisualUpdater.SetIsWalking(false);
                 break;
             case State.Move:
-                if (CheckIfInAttackRange())
+                if (IsInAttackRange())
                 {
                     return State.Attack;
                 }
@@ -61,11 +90,11 @@ public class EnemyAI : MonoBehaviour
                 MoveToPlayer();
                 break;
             case State.Attack:
-                if (!CheckIfInAttackRange())
+                if (!IsInAttackRange())
                 {
                     return State.Move;
                 }
-                Attack();
+                Attack(playerObject);
                 break;
         }
         return inputState;
@@ -85,7 +114,7 @@ public class EnemyAI : MonoBehaviour
         Vector2 moveDir = (target - transform.position).normalized;
 
         //Move
-        rb.MovePosition(new Vector2(this.transform.position.x, this.transform.position.y) + (moveDir * movementSpeed * Time.deltaTime));
+        rb.MovePosition(new Vector2(this.transform.position.x, this.transform.position.y) + (moveDir * characterData.movementSpeed * Time.deltaTime));
 
 
         //Update sprite direction
@@ -120,39 +149,22 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private bool CheckIfInAttackRange()
+    private bool IsInAttackRange()
     {
-        return (Vector2.Distance(this.transform.position, playerObject.transform.position) < attackDistance);
+        return (Vector2.Distance(this.transform.position, playerObject.transform.position) < attackRange);
     }
 
-    private void Attack()
+    private void Attack(GameObject target)
     {
-        if (attackCooldownTimer <= 0)
-        {
-            //Attack player
-            Debug.Log("Player attacked");
-            playerObject.GetComponent<CharacterData>().TakeDamage(damagePerAttack);
-            attackCooldownTimer = attackCooldown;
-        }
+        characterData.selectedWeaponHolder.Attack(new RotationDirection(GetDirectionToTarget(target.transform.position)), "Enemy");
     }
 
-    private void CooldownTimers()
+    private Direction GetDirectionToTarget(Vector3 targetPos)
     {
-        if (attackCooldownTimer > 0)
-        {
-            attackCooldownTimer -= Time.deltaTime;
-        }
+        Vector3 dir = targetPos - transform.position;
+        return Utility.GetDirection(dir.x, dir.y);
     }
 
-    public void TakeDamage(int damageIn)
-    {
-        hp -= damageIn;
-
-        if (hp <= 0)
-        {
-            Die();
-        }
-    }
 
     private void Die()
     {

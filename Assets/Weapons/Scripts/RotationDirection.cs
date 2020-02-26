@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentDirection
+public class RotationDirection
 {
     public Vector3 direction;
     public Quaternion rotation;
 
-    public EquipmentDirection(Direction attackDirection)
+    public RotationDirection(Direction inputDirection)
     {
-        switch (attackDirection)
+        switch (inputDirection)
         {
             case Direction.Left:
                 direction = Vector3.left * 0.5f;

@@ -5,31 +5,62 @@ using UnityEngine.UI;
 
 public class CharacterWeaponSelect : MonoBehaviour
 {
-    public enum EquipmentSlots {EquipOne, EquipTwo, EquipThree, EquipFour}
-    public EquipmentSlots selectedSlot;
-    [SerializeField] Image selectIcon;
+    [SerializeField] Image selectIcon = null;
 
-    public void InputCheck(float horizontal, float vertical)
+    CharacterData characterData;
+
+    private void Awake()
     {
-        if (horizontal > 0)
+        characterData = GetComponent<CharacterData>();
+    }
+   
+
+    public void InputCheck(Direction inputDirection)
+    {
+        switch (inputDirection)
         {
-            selectedSlot = EquipmentSlots.EquipTwo;
-            selectIcon.transform.localPosition = new Vector3(30,0);
+            case Direction.Up:
+                selectIcon.transform.localPosition = new Vector3(0, 30);
+                SelectWeapon(characterData.equipSlotOne);
+                break;
+
+            case Direction.Right:
+                selectIcon.transform.localPosition = new Vector3(30, 0);
+                SelectWeapon(characterData.equipSlotTwo);
+                break;
+
+            case Direction.Down:
+                selectIcon.transform.localPosition = new Vector3(0, -30);
+                SelectWeapon(characterData.equipSlotThree);
+                break;
+
+            case Direction.Left:
+                selectIcon.transform.localPosition = new Vector3(-30, 0);
+                SelectWeapon(characterData.equipSlotFour);
+                break;
+
+            default:
+                break;
         }
-        if (horizontal < 0)
+    }
+
+    public void SelectWeapon(CharacterWeaponHolder weaponHolder)
+    {
+        if (characterData.selectedWeaponHolder != null)
         {
-            selectedSlot = EquipmentSlots.EquipFour;
-            selectIcon.transform.localPosition = new Vector3(-30, 0);
+            characterData.selectedWeaponHolder.mySpriteRenderer.enabled = false;
         }
-        if (vertical > 0)
+
+        if (weaponHolder.myWeapon == null)
         {
-            selectedSlot = EquipmentSlots.EquipOne;
-            selectIcon.transform.localPosition = new Vector3(0, 30);
+            characterData.selectedWeaponHolder = weaponHolder;
+            characterData.selectedWeaponHolder.myWeapon = characterData.basicAttack;
         }
-        if (vertical < 0)
+        else
         {
-            selectedSlot = EquipmentSlots.EquipThree;
-            selectIcon.transform.localPosition = new Vector3(0, -30);
+            characterData.selectedWeaponHolder = weaponHolder;
         }
+
+        characterData.selectedWeaponHolder.mySpriteRenderer.GetComponent<SpriteRenderer>().enabled = true;
     }
 }

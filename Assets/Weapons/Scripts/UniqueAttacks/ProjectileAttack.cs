@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileAttack : Equipment
+public class ProjectileAttack : WeaponSpawnedObject
 {
-    public float speed;
     Rigidbody2D rb;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        GameObject.Destroy(this.gameObject, base.duration);
+
     }
 
     // Update is called once per frame
@@ -22,12 +21,22 @@ public class ProjectileAttack : Equipment
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy")
+      
+        if (collision.tag == ignoreTag)
         {
-            collision.GetComponent<EnemyAI>().TakeDamage(base.damage);
+            return;
+        }
+        print(collision.name);
+        if (collision.tag == "Enemy" || collision.tag == "Player")
+        {
+            CharacterData characterData = collision.GetComponent<CharacterData>();
+            foreach (Effect effect in base.effects)
+            {
+                characterData.AddEffect(effect);
+            }
             Destroy(gameObject);
         }
-        else if (collision.tag != "Player")
+        else
         {
             Destroy(gameObject);
         }
