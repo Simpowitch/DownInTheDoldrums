@@ -11,7 +11,6 @@ public class EnemyAI : MonoBehaviour
     SpriteAnimation characterVisualUpdater;
     Rigidbody2D rb;
 
-    [SerializeField] float movementSpeed = 1;
     float attackRange = 0;
     [SerializeField] float minimumAttackRange = 0.5f;
     [SerializeField] float detectionRange = 10f;
@@ -115,7 +114,7 @@ public class EnemyAI : MonoBehaviour
         Vector2 moveDir = (target - transform.position).normalized;
 
         //Move
-        rb.MovePosition(new Vector2(this.transform.position.x, this.transform.position.y) + (moveDir * movementSpeed * Time.deltaTime));
+        rb.MovePosition(new Vector2(this.transform.position.x, this.transform.position.y) + (moveDir * characterData.movementSpeed * Time.deltaTime));
 
 
         //Update sprite direction

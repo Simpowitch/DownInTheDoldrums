@@ -29,6 +29,11 @@ public class CharacterData : MonoBehaviour
     {
         UpdateHealthBar();
     }
+    private void Update()
+    {
+        ContinuousEffects();
+        LimitedTimeEffects();
+    }
 
     public void TakeDamage(int damage)
     {
@@ -92,7 +97,6 @@ public class CharacterData : MonoBehaviour
         
     }
 
-
     List<Effect> continuousEffects = new List<Effect>();
     List<Effect> limitedTimeEffects = new List<Effect>();
 
@@ -105,12 +109,61 @@ public class CharacterData : MonoBehaviour
                 break;
             case EffectType.Continuous:
                 continuousEffects.Add(effect);
+                effect.ApplyEffect(this);
                 break;
             case EffectType.LimitedTime:
                 limitedTimeEffects.Add(effect);
+                effect.ApplyEffect(this);
                 break;
             default:
                 break;
+        }
+    }
+
+    void ContinuousEffects()
+    {
+        foreach (Effect effect in continuousEffects)
+        {
+            if (effect.isTickBased)
+            {
+                TickEffect(effect);
+            }
+        }
+    }
+    void LimitedTimeEffects()
+    {
+        List<Effect> removeEffects = new List<Effect>();
+
+        foreach (Effect effect in limitedTimeEffects)
+        {
+            if (effect.isTickBased)
+            {
+                TickEffect(effect);
+            }
+
+            effect.duration -= Time.deltaTime;
+            if (effect.duration <= 0)
+            {
+                effect.RemoveEffect(this);
+                removeEffects.Add(effect);
+            }
+        }
+        foreach (Effect effect in removeEffects)
+        {
+            limitedTimeEffects.Remove(effect);
+        }
+    }
+
+    void TickEffect(Effect effect)
+    {
+        if (effect.tickTimeRemaining <= 0)
+        {
+            effect.tickTimeRemaining += effect.tickRate;
+            effect.ApplyEffect(this);
+        }
+        else
+        {
+            effect.tickTimeRemaining -= Time.deltaTime;
         }
     }
 }

@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2eae1246193123498257f32afec8174, type: 3}
-  m_Name: Tempeffect
+  m_Script: {fileID: 11500000, guid: 7fe62f7460491ad4e80b6dfb564b2016, type: 3}
+  m_Name: FreezeBall
   m_EditorClassIdentifier: 
   effectType: 0
-  damage: 0

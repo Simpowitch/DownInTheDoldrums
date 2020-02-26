@@ -10,6 +10,7 @@ public class ProjectileAttack : WeaponSpawnedObject
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
@@ -20,12 +21,12 @@ public class ProjectileAttack : WeaponSpawnedObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+      
         if (collision.tag == ignoreTag)
         {
-            Destroy(gameObject);
             return;
         }
-
+        print(collision.name);
         if (collision.tag == "Enemy" || collision.tag == "Player")
         {
             CharacterData characterData = collision.GetComponent<CharacterData>();

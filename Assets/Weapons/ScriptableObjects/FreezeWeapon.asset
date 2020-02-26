@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: FreezeWeapon
   m_EditorClassIdentifier: 
   damage: 0
-  cooldown: 0
+  cooldown: 0.25
   spawnableObject: {fileID: 0}
