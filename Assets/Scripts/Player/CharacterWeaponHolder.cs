@@ -15,6 +15,14 @@ public class CharacterWeaponHolder : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (myWeapon != null)
+        {
+            mySpriteRenderer.sprite = myWeapon.weaponSprite;
+        }
+    }
+
     public void Attack(RotationDirection attackDirection, string ignoreTag)
     {
         if (cooldownTimer <= 0)

@@ -18,3 +18,4 @@ MonoBehaviour:
     type: 3}
   onHitEffects:
   - {fileID: 11400000, guid: f6181b00b02e78f47831476213500a52, type: 2}
+  weaponSprite: {fileID: 21300000, guid: 829442e82faa4d2448b7900e808e370a, type: 3}

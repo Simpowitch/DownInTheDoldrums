@@ -737,6 +737,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 230604450, guid: ca1029c06da72ba489a4a54dc0a14cc2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.10899999
+      objectReference: {fileID: 0}
+    - target: {fileID: 230604450, guid: ca1029c06da72ba489a4a54dc0a14cc2, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 660069016, guid: ca1029c06da72ba489a4a54dc0a14cc2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.10899999
+      objectReference: {fileID: 0}
+    - target: {fileID: 660069016, guid: ca1029c06da72ba489a4a54dc0a14cc2, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1829161476, guid: ca1029c06da72ba489a4a54dc0a14cc2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.10899999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1829161476, guid: ca1029c06da72ba489a4a54dc0a14cc2, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2093630374, guid: ca1029c06da72ba489a4a54dc0a14cc2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.109
+      objectReference: {fileID: 0}
+    - target: {fileID: 2093630374, guid: ca1029c06da72ba489a4a54dc0a14cc2, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 674890231046991831, guid: ca1029c06da72ba489a4a54dc0a14cc2,
         type: 3}
       propertyPath: maxHealth
@@ -747,6 +779,16 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 624347663}
+    - target: {fileID: 2026521463673701373, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351762128832621296, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3179608269834658806, guid: ca1029c06da72ba489a4a54dc0a14cc2,
         type: 3}
       propertyPath: selectIcon
@@ -758,6 +800,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 02d2d5ce59925df4aa0a86781853a028,
         type: 2}
+    - target: {fileID: 6903511941063073259, guid: ca1029c06da72ba489a4a54dc0a14cc2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7501184764562187968, guid: ca1029c06da72ba489a4a54dc0a14cc2,
         type: 3}
       propertyPath: myWeapon

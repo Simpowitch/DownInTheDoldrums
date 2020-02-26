@@ -9,6 +9,7 @@ public class Weapon : ScriptableObject
     public float cooldown;
     public GameObject spawnableObject;
     public List<Effect> onHitEffects = new List<Effect>();
+    public Sprite weaponSprite;
 
     public float GetExpectedRange()
     {
