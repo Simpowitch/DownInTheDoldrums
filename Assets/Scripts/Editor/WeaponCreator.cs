@@ -2,12 +2,17 @@
 using UnityEditor;
 public class WeaponCreator
 {
+    const int IGNORELAYER = 8;
+
+
    [MenuItem("Assets/Weapon/New Weapon")]
     static void CreateWeapon()
     {
         GameObject weaponPrefab = new GameObject();
         weaponPrefab = GameObject.Instantiate(weaponPrefab);
         weaponPrefab.name = "New Weapon";
+        weaponPrefab.gameObject.layer = IGNORELAYER;
+
         weaponPrefab.AddComponent(typeof(SpriteRenderer));
         weaponPrefab.GetComponent<SpriteRenderer>().sortingOrder = 1;
 
@@ -29,7 +34,7 @@ public class WeaponCreator
         GameObject newPrefab = new GameObject();
         newPrefab = GameObject.Instantiate(newPrefab);
         newPrefab.name = "New Melee SpawnableObject";
-
+        newPrefab.gameObject.layer = IGNORELAYER;
 
 
         newPrefab.AddComponent(typeof(BoxCollider2D));
@@ -61,6 +66,7 @@ public class WeaponCreator
         GameObject newPrefab = new GameObject();
         newPrefab = GameObject.Instantiate(newPrefab);
         newPrefab.name = "New Ranged SpawnableObject";
+        newPrefab.gameObject.layer = IGNORELAYER;
 
         newPrefab.AddComponent(typeof(BoxCollider2D));
         newPrefab.GetComponent<BoxCollider2D>().isTrigger = true;

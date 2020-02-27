@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1418981741801082874}
   - component: {fileID: 4197976549652529064}
   - component: {fileID: 940180275}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProjectileAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,10 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a606c9dd9f7ae84ba9391a1c87caecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectLifetime: 3
-  speed: 25
-  attachToCharacter: 0
-  ignoreTag: 
 --- !u!61 &4197976549652529064
 BoxCollider2D:
   m_ObjectHideFlags: 0

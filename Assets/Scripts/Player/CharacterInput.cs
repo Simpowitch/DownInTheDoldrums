@@ -43,8 +43,4 @@ public class CharacterInput : MonoBehaviour
     {
         return Input.GetAxis(horizontal) != 0 || Input.GetAxis(vertical) != 0;
     }
-
-
-
-
 }

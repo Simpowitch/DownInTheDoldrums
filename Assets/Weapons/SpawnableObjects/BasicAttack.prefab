@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2084192236791322371}
   - component: {fileID: 8288716085651194648}
   - component: {fileID: 4028819653316673079}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BasicAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,10 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d63c5e4bb711aad4e8b61d62642194a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectLifetime: 0.5
-  speed: 0
-  attachToCharacter: 1
-  ignoreTag: 
 --- !u!50 &4028819653316673079
 Rigidbody2D:
   serializedVersion: 4
