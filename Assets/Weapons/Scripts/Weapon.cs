@@ -17,9 +17,12 @@ public class Weapon : MonoBehaviour
 
     public Sprite weaponSprite;
     public float cooldown;
-    public int numberOfSpawnObjectsPerAttack = 1;
     public float attackRate = 0.5f;
+    [SerializeField] bool isBurst;
+    [SerializeField] bool isRandom;
+    [SerializeField][Range(0,180)] float randomAngleOffset;
 
+    public List<float> SpawnedObjectsOffset = new List<float>();
 
     private void Update()
     {
@@ -46,16 +49,29 @@ public class Weapon : MonoBehaviour
 
     IEnumerator AttackWithAttackRate(Transform characterTransform, RotationDirection attackDirection, string ignoreTag)
     {
-        for (int i = 0; i < numberOfSpawnObjectsPerAttack; i++)
+        for (int i = 0; i < SpawnedObjectsOffset.Count; i++)
         {
-            GameObject spawnedObject = Instantiate(spawnableObject, characterTransform.position + attackDirection.direction, attackDirection.rotation);
+            Quaternion rotation = attackDirection.rotation;
+
+            if (isRandom)
+            {
+                rotation *= Quaternion.Euler(0, 0, Random.Range(-randomAngleOffset/2, randomAngleOffset/2));
+            }
+            
+
+            GameObject spawnedObject = Instantiate(spawnableObject, characterTransform.position + attackDirection.direction, rotation);
             WeaponSpawnedObject weaponSpawnedObject = spawnedObject.GetComponent<WeaponSpawnedObject>();
             if (spawnedObjectAttachToCharacter)
             {
                 spawnedObject.transform.SetParent(characterTransform);
             }
             weaponSpawnedObject.CreateWeaponSpawnedObject(this, ignoreTag);
-            yield return new WaitForSeconds(attackRate);
+            if (isBurst)
+            {
+                yield return new WaitForSeconds(attackRate);
+            }
+
         }
+        yield return null;
     }
 }

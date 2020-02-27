@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8505059930639801325}
   - component: {fileID: 1400171568}
   - component: {fileID: 6317212475219888712}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FreezeBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,10 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a606c9dd9f7ae84ba9391a1c87caecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectLifetime: 3
-  speed: 10
-  attachToCharacter: 0
-  ignoreTag: 
 --- !u!50 &1400171568
 Rigidbody2D:
   serializedVersion: 4
