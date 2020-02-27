@@ -13,7 +13,7 @@ public class CharacterWeaponSelect : MonoBehaviour
     {
         characterData = GetComponent<CharacterData>();
     }
-   
+
 
     public void InputCheck(Direction inputDirection)
     {
@@ -48,19 +48,16 @@ public class CharacterWeaponSelect : MonoBehaviour
     {
         if (characterData.selectedWeaponHolder != null)
         {
-            characterData.selectedWeaponHolder.mySpriteRenderer.enabled = false;
+            if (characterData.selectedWeaponHolder.myWeapon != null)
+            {
+                characterData.selectedWeaponHolder.myWeapon.GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
 
-        if (weaponHolder.myWeapon == null)
+        characterData.selectedWeaponHolder = weaponHolder;
+        if (characterData.selectedWeaponHolder.myWeapon != null)
         {
-            characterData.selectedWeaponHolder = weaponHolder;
-            characterData.selectedWeaponHolder.myWeapon = characterData.basicAttack;
+            characterData.selectedWeaponHolder.myWeapon.GetComponent<SpriteRenderer>().enabled = true;
         }
-        else
-        {
-            characterData.selectedWeaponHolder = weaponHolder;
-        }
-
-        characterData.selectedWeaponHolder.mySpriteRenderer.GetComponent<SpriteRenderer>().enabled = true;
     }
 }

@@ -14,8 +14,6 @@ public class CharacterData : MonoBehaviour
     public int damage;
     public float movementSpeed;
 
-    public Weapon basicAttack;
-
     public CharacterWeaponHolder equipSlotOne;
     public CharacterWeaponHolder equipSlotTwo;
     public CharacterWeaponHolder equipSlotThree;
