@@ -6,7 +6,7 @@ using UnityEngine;
 public class EffectDamage : Effect
 {
 
-    [SerializeField] int damage;
+    [SerializeField] int damage = 0;
     public override void ApplyEffect(CharacterData target)
     {
         target.TakeDamage(damage);

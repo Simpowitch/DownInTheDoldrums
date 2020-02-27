@@ -10,7 +10,6 @@ public class ProjectileAttack : WeaponSpawnedObject
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
     }
 
     // Update is called once per frame
