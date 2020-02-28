@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterAttack : MonoBehaviour
 {
@@ -10,7 +8,6 @@ public class CharacterAttack : MonoBehaviour
     {
         characterData = GetComponent<CharacterData>();
     }
-
     public void InputCheck(Direction interactDirection)
     {
         characterData.selectedWeaponHolder.Attack(new RotationDirection(interactDirection), "Player");

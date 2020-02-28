@@ -9,7 +9,7 @@ public class EnemyAI : MonoBehaviour
 
     GameObject playerObject = null;
     SpriteAnimation characterVisualUpdater;
-    Rigidbody2D rb;
+    Rigidbody2D rigidBody;
 
     float attackRange = 0;
     [SerializeField] float minimumAttackRange = 0.5f;
@@ -20,16 +20,17 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
+
         characterData = GetComponent<CharacterData>();
         characterVisualUpdater = GetComponent<SpriteAnimation>();
-        rb = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
         weaponSelector = GetComponent<CharacterWeaponSelect>();
     }
 
 
     private void Start()
     {
-        ChangeWeapon(0);
+        ChangeWeapon(0); //Enemy start with weapon slot one as default
     }
 
     private void CalculateAttackRange()
@@ -59,7 +60,6 @@ public class EnemyAI : MonoBehaviour
         CalculateAttackRange();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerObject == null)
@@ -114,8 +114,7 @@ public class EnemyAI : MonoBehaviour
         Vector2 moveDir = (target - transform.position).normalized;
 
         //Move
-        rb.MovePosition(new Vector2(this.transform.position.x, this.transform.position.y) + (moveDir * characterData.movementSpeed * Time.deltaTime));
-
+        rigidBody.MovePosition(new Vector2(this.transform.position.x, this.transform.position.y) + (moveDir * characterData.movementSpeed * Time.deltaTime));
 
         //Update sprite direction
         float deltaX = moveDir.x;
@@ -164,8 +163,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 dir = targetPos - transform.position;
         return Utility.GetDirection(dir.x, dir.y);
     }
-
-
+    //Remove?!?!?!?
     private void Die()
     {
         GameObject.Destroy(this.gameObject);
