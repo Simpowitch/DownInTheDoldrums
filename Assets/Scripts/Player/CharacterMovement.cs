@@ -11,10 +11,13 @@ public class CharacterMovement : MonoBehaviour
 
     Vector2 noramlizedMovement;
 
+    SpriteAnimation spriteAnimation;
+
     void Awake()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myStats = GetComponent<CharacterData>();
+        spriteAnimation = GetComponent<SpriteAnimation>();
     }
 
     private void FixedUpdate()
@@ -31,5 +34,6 @@ public class CharacterMovement : MonoBehaviour
             noramlizedMovement /= noramlizedMovement.magnitude;
         }
         facing = Utility.GetDirection(xMovement, yMovement);
+        spriteAnimation.SetDirection(facing);
     }
 }

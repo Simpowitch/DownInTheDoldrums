@@ -9,7 +9,7 @@ public class SpriteAnimation : MonoBehaviour
     SpriteRenderer spriteRenderer = null;
 
     //Open for input through inspector, can also be set through methods below
-    [SerializeField] Sprite[] left = null;
+    [SerializeField] Sprite[] right = null;
     [SerializeField] Sprite[] up = null;
     [SerializeField] Sprite[] down = null;
 
@@ -19,11 +19,15 @@ public class SpriteAnimation : MonoBehaviour
     int spriteIndex = 0;
 
 
+    [SerializeField] bool ignoreUpAndDown = false;
+
+
+
     [SerializeField] Direction myDirection;
     bool isWalking = false;
 
 
-    private void Start()
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         updateFrequency = 1f / framesPerSecond;
@@ -31,7 +35,6 @@ public class SpriteAnimation : MonoBehaviour
 
     private void Update()
     {
-
         if (isWalking)
         {
             updateTimer += Time.deltaTime;
@@ -44,18 +47,18 @@ public class SpriteAnimation : MonoBehaviour
                 switch (myDirection)
                 {
                     case Direction.Left:
-                        if (spriteIndex >= left.Length)
+                        if (spriteIndex >= right.Length)
                         {
                             spriteIndex = 0;
                         }
-                        spriteRenderer.sprite = left[spriteIndex];
+                        spriteRenderer.sprite = right[spriteIndex];
                         break;
                     case Direction.Right:
-                        if (spriteIndex >= left.Length)
+                        if (spriteIndex >= right.Length)
                         {
                             spriteIndex = 0;
                         }
-                        spriteRenderer.sprite = left[spriteIndex];
+                        spriteRenderer.sprite = right[spriteIndex];
                         break;
                     case Direction.Up:
                         if (spriteIndex >= up.Length)
@@ -80,30 +83,50 @@ public class SpriteAnimation : MonoBehaviour
     {
         if (movingDirection != myDirection)
         {
-            myDirection = movingDirection;
+            SetIsWalking(movingDirection == Direction.None ? false : true);
 
-            updateTimer = 0f;
-            spriteIndex = 0;
 
-            switch (myDirection)
+            switch (movingDirection)
             {
                 case Direction.Left:
-                    transform.localScale = new Vector3(1f, 1f, 1f);
-                    spriteRenderer.sprite = left[0];
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
+                    spriteRenderer.sprite = right[0];
+                    myDirection = movingDirection;
+                    updateTimer = 0f;
+                    spriteIndex = 0;
                     break;
                 case Direction.Right:
-                    transform.localScale = new Vector3(-1f, 1f, 1f);
-                    spriteRenderer.sprite = left[0];
+                    transform.localScale = new Vector3(1f, 1f, 1f);
+                    spriteRenderer.sprite = right[0];
+                    myDirection = movingDirection;
+                    updateTimer = 0f;
+                    spriteIndex = 0;
                     break;
                 case Direction.Up:
+                    if (ignoreUpAndDown)
+                    {
+                        break;
+                    }
                     transform.localScale = new Vector3(1f, 1f, 1f);
                     spriteRenderer.sprite = up[0];
+                    updateTimer = 0f;
+                    spriteIndex = 0;
                     break;
                 case Direction.Down:
+                    if (ignoreUpAndDown)
+                    {
+                        break;
+                    }
                     transform.localScale = new Vector3(1f, 1f, 1f);
                     spriteRenderer.sprite = down[0];
+                    myDirection = movingDirection;
+                    updateTimer = 0f;
+                    spriteIndex = 0;
+                    break;
+                case Direction.None:
                     break;
             }
+
         }
     }
 
@@ -119,10 +142,10 @@ public class SpriteAnimation : MonoBehaviour
                 switch (myDirection)
                 {
                     case Direction.Left:
-                        spriteRenderer.sprite = left[0];
+                        spriteRenderer.sprite = right[0];
                         break;
                     case Direction.Right:
-                        spriteRenderer.sprite = left[0];
+                        spriteRenderer.sprite = right[0];
                         break;
                     case Direction.Up:
                         spriteRenderer.sprite = up[0];
@@ -137,7 +160,7 @@ public class SpriteAnimation : MonoBehaviour
 
     public void SetSpriteLeft(Sprite[] sprites)
     {
-        left = sprites;
+        right = sprites;
     }
 
     public void SetSpriteUp(Sprite[] sprites)
