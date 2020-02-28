@@ -8,7 +8,7 @@ public class CharacterWeaponHolder : MonoBehaviour
     {
         if (myWeapon != null)
         {
-            myWeapon.Attack(this.transform, attackDirection, ignoreTag);
+            myWeapon.Attack(this.transform.parent, attackDirection, ignoreTag);
         }
     }
 }
