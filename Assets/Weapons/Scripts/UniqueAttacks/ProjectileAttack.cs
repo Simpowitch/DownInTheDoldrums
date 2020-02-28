@@ -1,21 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ProjectileAttack : WeaponSpawnedObject
 {
-    Rigidbody2D rb;
+    Rigidbody2D rigidBody;
 
-    // Start is called before the first frame update
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        rb.MovePosition(transform.position + transform.right * Time.deltaTime * speed);
+        rigidBody.MovePosition(transform.position + transform.right * Time.deltaTime * speed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

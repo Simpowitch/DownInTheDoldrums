@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterWeaponSelect : MonoBehaviour
@@ -13,7 +11,6 @@ public class CharacterWeaponSelect : MonoBehaviour
     {
         characterData = GetComponent<CharacterData>();
     }
-
 
     public void InputCheck(Direction inputDirection)
     {

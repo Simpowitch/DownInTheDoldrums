@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CharacterAttack), typeof(CharacterMovement), typeof(CharacterWeaponSelect))]
 public class CharacterInput : MonoBehaviour
@@ -10,8 +7,6 @@ public class CharacterInput : MonoBehaviour
     CharacterMovement movement;
     CharacterWeaponSelect weaponSelect;
 
-   
-    // Start is called before the first frame update
     void Awake()
     {
         interaction = GetComponent<CharacterAttack>();
@@ -21,24 +16,28 @@ public class CharacterInput : MonoBehaviour
 
     private void Start()
     {
-        weaponSelect.InputCheck(Direction.Up);
+        weaponSelect.InputCheck(Direction.Up); //Start game with weapon slot ONE selected
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Select weapon
         if (IsAxisUsed("WeaponHorizontal", "WeaponVertical"))
         {
             weaponSelect.InputCheck(Utility.GetDirection(Input.GetAxis("WeaponHorizontal"), Input.GetAxis("WeaponVertical")));
         }
+
+        //Right stick / arrow keys input
         if (IsAxisUsed("HorizontalSecondary", "VerticalSecondary"))
         {
             interaction.InputCheck(Utility.GetDirection(Input.GetAxis("HorizontalSecondary"), Input.GetAxis("VerticalSecondary")));
         }
 
+        //Left stick / WASD Inputs
         movement.InputCheck(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
 
+    //Check if there is an active axis input
     bool IsAxisUsed(string horizontal, string vertical)
     {
         return Input.GetAxis(horizontal) != 0 || Input.GetAxis(vertical) != 0;

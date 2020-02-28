@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -26,6 +24,7 @@ public class CharacterMovement : MonoBehaviour
     {
         myRigidbody.MovePosition(myRigidbody.position + noramlizedMovement * myStats.movementSpeed * Time.fixedDeltaTime);
     }
+
     public void InputCheck(float xMovement, float yMovement)
     {
         noramlizedMovement = new Vector2(xMovement, yMovement);

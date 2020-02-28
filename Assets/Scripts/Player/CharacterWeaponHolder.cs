@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterWeaponHolder : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class CharacterWeaponHolder : MonoBehaviour
     {
         if (myWeapon != null)
         {
-            myWeapon.Attack(this.transform, attackDirection, ignoreTag);
+            myWeapon.Attack(this.transform.parent, attackDirection, ignoreTag);
         }
     }
 }

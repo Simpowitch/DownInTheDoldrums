@@ -8,6 +8,8 @@ public class Weapon : MonoBehaviour
 
     public GameObject spawnableObject;
 
+    public string description;
+
     public float spawnedObjectLifeTime;
     public float spawnedObjectSpeed;
     public bool spawnedObjectAttachToCharacter;
@@ -18,9 +20,9 @@ public class Weapon : MonoBehaviour
     public Sprite weaponSprite;
     public float cooldown;
     public float attackRate = 0.5f;
-    [SerializeField] bool isBurst;
-    [SerializeField] bool isRandom;
-    [SerializeField][Range(0,180)] float randomAngleOffset;
+    [SerializeField] bool isBurst = false;
+    [SerializeField] bool isRandom = false;
+    [SerializeField][Range(0,180)] float randomAngleOffset = 0;
 
     public List<float> SpawnedObjectsOffset = new List<float>();
 
@@ -57,7 +59,10 @@ public class Weapon : MonoBehaviour
             {
                 rotation *= Quaternion.Euler(0, 0, Random.Range(-randomAngleOffset/2, randomAngleOffset/2));
             }
-            
+            else
+            {
+                rotation *= Quaternion.Euler(0, 0, SpawnedObjectsOffset[i]);
+            }     
 
             GameObject spawnedObject = Instantiate(spawnableObject, characterTransform.position + attackDirection.direction, rotation);
             WeaponSpawnedObject weaponSpawnedObject = spawnedObject.GetComponent<WeaponSpawnedObject>();
@@ -70,7 +75,6 @@ public class Weapon : MonoBehaviour
             {
                 yield return new WaitForSeconds(attackRate);
             }
-
         }
         yield return null;
     }

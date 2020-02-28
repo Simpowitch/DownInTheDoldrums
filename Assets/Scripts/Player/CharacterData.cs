@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class CharacterData : MonoBehaviour
 {
     [SerializeField] HealthBar healthBar = null;
@@ -41,7 +40,6 @@ public class CharacterData : MonoBehaviour
         {
             Die();
         }
-        
     }
 
     private void UpdateHealthBar()
@@ -51,39 +49,10 @@ public class CharacterData : MonoBehaviour
             healthBar.SetMaxHealth(maxHealth);
             healthBar.SetHealth(health);
         }
-
     }
-
-    public void AddItem(Item newItem)
-    {
-        //items.Add(newItem);
-        //foreach (Effect newEffect in newItem.effects)
-        //{
-        //    switch (newEffect.effectType)
-        //    {
-        //        case EffectType.Damage:
-        //            damage += newEffect.change;
-        //            break;
-        //        case EffectType.MovementSpeed:
-        //            movementSpeed += newEffect.change;
-        //            break;
-        //        case EffectType.MaxHP:
-        //            maxHealth += newEffect.change;
-        //            break;
-        //        case EffectType.InstantHeal:
-        //            health += newEffect.change;
-        //            break;
-        //    }
-        //}
-
-        ////Update UI to show changes
-        //UpdateHealthBar();
-    }
-
 
     void Die()
     {
-
         if (gameObject.tag == "Enemy")
         {
             Destroy(this.gameObject);
@@ -92,7 +61,10 @@ public class CharacterData : MonoBehaviour
         {
             print("Dead");
         }
-        
+    }
+    public void AddItem(Item item)
+    {
+
     }
 
 
@@ -107,6 +79,7 @@ public class CharacterData : MonoBehaviour
             case EffectType.Instant:
                 effect.ApplyEffect(this);
                 break;
+
             case EffectType.Continuous:
                 if (continuousEffects.Contains(effect))
                 {
@@ -115,6 +88,7 @@ public class CharacterData : MonoBehaviour
                 continuousEffects.Add(effect);
                 StartCoroutine(DoContinuousEffect(effect));
                 break;
+
             case EffectType.LimitedTime:
                 if (limitedTimeEffects.Contains(effect))
                 {
@@ -123,6 +97,7 @@ public class CharacterData : MonoBehaviour
                 limitedTimeEffects.Add(effect);
                 StartCoroutine(DoLimitedTimeEffect(effect, effect.duration));
                 break;
+
             default:
                 break;
         }

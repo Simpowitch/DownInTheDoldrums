@@ -11,7 +11,6 @@ public class BasicAttack : WeaponSpawnedObject
             return;
         }
 
-
         if (other.tag == "Enemy" || other.tag == "Player")
         {
             CharacterData characterData = other.GetComponent<CharacterData>();
